@@ -1,0 +1,2835 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{projectfile using keras chayan}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{tensorflow} \PY{k}{as} \PY{n+nn}{tf}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k}{import} \PY{n}{Imputer}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{cross\PYZus{}validation} \PY{k}{import} \PY{n}{train\PYZus{}test\PYZus{}split}
+        \PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{random} \PY{k}{import} \PY{n}{seed}
+        \PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+        \PY{k+kn}{from} \PY{n+nn}{tensorflow} \PY{k}{import} \PY{n}{set\PYZus{}random\PYZus{}seed}
+        \PY{n}{set\PYZus{}random\PYZus{}seed}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Users\textbackslash{}USER\textbackslash{}Anaconda3\textbackslash{}envs\textbackslash{}keras\_env\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}h5py\textbackslash{}\_\_init\_\_.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from .\_conv import register\_converters as \_register\_converters
+C:\textbackslash{}Users\textbackslash{}USER\textbackslash{}Anaconda3\textbackslash{}envs\textbackslash{}keras\_env\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}cross\_validation.py:41: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model\_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+
+    \end{Verbatim}
+
+    \section{Reading the dataset}\label{reading-the-dataset}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{hcc} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{hcc\PYZhy{}data.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{hcc}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{n}{n}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:}    Gender  Symptoms  Alcohol  Hepatitis B Surface Antigen  \textbackslash{}
+        0       1       0.0        1                          0.0   
+        1       0       NaN        0                          0.0   
+        
+           Hepatitis B e Antigen  Hepatitis B Core Antibody  \textbackslash{}
+        0                    0.0                        0.0   
+        1                    0.0                        0.0   
+        
+           Hepatitis C Virus Antibody  Cirrhosis  Endemic Countries  Smoking  {\ldots}    \textbackslash{}
+        0                         0.0          1                0.0      1.0  {\ldots}     
+        1                         1.0          1                NaN      NaN  {\ldots}     
+        
+           Alkaline phosphatase  Total Proteins  Creatinine  Number of Nodules  \textbackslash{}
+        0                 150.0             7.1         0.7                1.0   
+        1                   NaN             NaN         NaN                1.0   
+        
+           Major dimension of nodule  Direct Bilirubin  Iron  Oxygen Saturation  \textbackslash{}
+        0                        3.5               0.5   NaN                NaN   
+        1                        1.8               NaN   NaN                NaN   
+        
+           Ferritin  Class  
+        0       NaN      1  
+        1       NaN      1  
+        
+        [2 rows x 50 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{hcc}\PY{o}{.}\PY{n}{columns}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:} Index(['Gender', 'Symptoms', 'Alcohol', 'Hepatitis B Surface Antigen',
+               'Hepatitis B e Antigen', 'Hepatitis B Core Antibody',
+               'Hepatitis C Virus Antibody', 'Cirrhosis', 'Endemic Countries',
+               'Smoking', 'Diabetes', 'Obesity', 'Hemochromatosis',
+               'Arterial Hypertension', 'Chronic Renal Insufficiency',
+               'Human Immunodeficiency Virus', 'Nonalcoholic Steatohepatitis',
+               'Esophageal Varices', 'Splenomegaly', 'Portal Hypertension',
+               'Portal Vein Thrombosis', 'Liver Metastasis', 'Radiological Hallmark',
+               'Age\_at\_diagnosis', 'Grams of Alcohol per day',
+               'Packs of cigarets per year', 'Performance Status',
+               'Encefalopathy degree', 'Ascites degree',
+               'International Normalised Ratio', 'Alpha-Fetoprotein', 'Haemoglobin',
+               'Mean Corpuscular Volume', 'Leukocytes', 'Platelets', 'Albumin',
+               'Total Bilirubin', 'Alanine transaminase', 'Aspartate transaminase',
+               'Gamma glutamyl transferase', 'Alkaline phosphatase', 'Total Proteins',
+               'Creatinine', 'Number of Nodules', 'Major dimension of nodule',
+               'Direct Bilirubin', 'Iron', 'Oxygen Saturation', 'Ferritin', 'Class'],
+              dtype='object')
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{hcc}\PY{o}{.}\PY{n}{columns} \PY{p}{:}
+            \PY{k}{if} \PY{n}{hcc}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Class}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{n}{hcc}\PY{p}{[}\PY{n}{x}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mf}{0.1}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ = }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{hcc}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Class}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{n}{hcc}\PY{p}{[}\PY{n}{x}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Endemic Countries  =  0.10940519192990868
+Haemoglobin  =  0.2923566550222707
+Albumin  =  0.2877985579698942
+Iron  =  0.2914055776870694
+Class  =  1.0
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{hcc}\PY{o}{.}\PY{n}{columns} \PY{p}{:}
+            \PY{k}{if} \PY{n}{hcc}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Class}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{n}{hcc}\PY{p}{[}\PY{n}{x}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.2}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ = }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{hcc}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Class}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{n}{hcc}\PY{p}{[}\PY{n}{x}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Symptoms  =  -0.2970349024975779
+Portal Vein Thrombosis  =  -0.21320071635561033
+Liver Metastasis  =  -0.24925942952179742
+Performance Status  =  -0.37970806342311314
+Ascites degree  =  -0.2611445142577042
+International Normalised Ratio  =  -0.20234811096417377
+Total Bilirubin  =  -0.22396084388025556
+Alkaline phosphatase  =  -0.29387264675701524
+Direct Bilirubin  =  -0.26490310100015263
+Ferritin  =  -0.32148949023643725
+
+    \end{Verbatim}
+
+    \section{Handling the values for continuous
+attributes}\label{handling-the-values-for-continuous-attributes}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{continuous\PYZus{}x} \PY{o}{=} \PY{n}{hcc}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Symptoms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ferritin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Portal Vein Thrombosis}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Liver Metastasis}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Performance Status}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ascites degree}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{International Normalised Ratio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total Bilirubin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Alkaline phosphatase}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Direct Bilirubin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Endemic Countries}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Haemoglobin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Albumin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Iron}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{continuous\PYZus{}x}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}8}]:}    Symptoms  Ferritin  Portal Vein Thrombosis  Liver Metastasis  \textbackslash{}
+        0       0.0       NaN                     0.0               0.0   
+        1       NaN       NaN                     0.0               0.0   
+        2       0.0      16.0                     0.0               1.0   
+        3       1.0       NaN                     0.0               1.0   
+        4       1.0      22.0                     0.0               0.0   
+        
+           Performance Status  Ascites degree  International Normalised Ratio  \textbackslash{}
+        0                   0             1.0                            1.53   
+        1                   0             1.0                             NaN   
+        2                   2             2.0                            0.96   
+        3                   0             1.0                            0.95   
+        4                   0             1.0                            0.94   
+        
+           Total Bilirubin  Alkaline phosphatase  Direct Bilirubin  Endemic Countries  \textbackslash{}
+        0              2.1                 150.0               0.5                0.0   
+        1              NaN                   NaN               NaN                NaN   
+        2              0.4                 109.0               0.1                0.0   
+        3              0.4                 174.0               0.2                0.0   
+        4              0.7                 109.0               NaN                0.0   
+        
+           Haemoglobin  Albumin  Iron  
+        0         13.7      3.4   NaN  
+        1          NaN      NaN   NaN  
+        2          8.9      3.3  28.0  
+        3         13.4      3.7   NaN  
+        4         14.3      4.1  59.0  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{y\PYZus{}value} \PY{o}{=} \PY{n}{hcc}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:} \PY{p}{,} \PY{l+m+mi}{49}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n+nb}{type}\PY{p}{(}\PY{n}{y\PYZus{}value}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}10}]:} pandas.core.series.Series
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{imputer} \PY{o}{=} \PY{n}{Imputer}\PY{p}{(}\PY{n}{missing\PYZus{}values} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{NaN}\PY{l+s+s2}{\PYZdq{}} \PY{p}{,}\PY{n}{strategy} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)}  
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{imputer} \PY{o}{=} \PY{n}{imputer}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{continuous\PYZus{}x}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{continuous\PYZus{}x} \PY{o}{=} \PY{n}{imputer}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{continuous\PYZus{}x}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{continuous\PYZus{}x}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[[  0.         438.99764706   0.         {\ldots}  13.7          3.4
+   85.59883721]
+ [  0.63945578 438.99764706   0.         {\ldots}  12.87901235   3.44553459
+   85.59883721]
+ [  0.          16.           0.         {\ldots}   8.9          3.3
+   28.        ]
+ {\ldots}
+ [  0.         438.99764706   0.         {\ldots}  13.3          4.3
+   85.59883721]
+ [  0.         438.99764706   1.         {\ldots}  15.6          4.8
+   85.59883721]
+ [  1.         438.99764706   0.         {\ldots}  12.7          2.2
+   85.59883721]]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{continuous\PYZus{}x} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{data} \PY{o}{=} \PY{n}{continuous\PYZus{}x}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{continuous\PYZus{}x} \PY{o}{=} \PY{n}{continuous\PYZus{}x}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{p}{(}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{x}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{x}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{x}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{continuous\PYZus{}x}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}17}]:}          0         1    2    3    4    5         6         7         8   \textbackslash{}
+         0  0.000000  0.196860  0.0  0.0  0.0  0.0  0.173367  0.044776  0.151954   
+         1  0.639456  0.196860  0.0  0.0  0.0  0.0  0.146194  0.069352  0.215518   
+         2  0.000000  0.007175  0.0  1.0  0.5  0.5  0.030151  0.002488  0.110062   
+         3  1.000000  0.196860  0.0  1.0  0.0  0.0  0.027638  0.002488  0.176475   
+         4  1.000000  0.009865  0.0  0.0  0.0  0.0  0.025126  0.009950  0.110062   
+         
+                  9         10        11        12        13  
+         0  0.013699  0.000000  0.635036  0.500000  0.382138  
+         1  0.062671  0.079365  0.575110  0.515178  0.382138  
+         2  0.000000  0.000000  0.284672  0.466667  0.125000  
+         3  0.003425  0.000000  0.613139  0.600000  0.382138  
+         4  0.062671  0.000000  0.678832  0.733333  0.263393  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{c+c1}{\PYZsh{}X\PYZus{}train, X\PYZus{}test, y\PYZus{}train, y\PYZus{}test = train\PYZus{}test\PYZus{}split(continuous\PYZus{}x,y\PYZus{}value,test\PYZus{}size=0.3, random\PYZus{}state=100)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{c+c1}{\PYZsh{}X\PYZus{}train.columns = [\PYZsq{}a\PYZsq{},\PYZsq{}b\PYZsq{},\PYZsq{}c\PYZsq{},\PYZsq{}d\PYZsq{},\PYZsq{}e\PYZsq{},\PYZsq{}f\PYZsq{},\PYZsq{}g\PYZsq{},\PYZsq{}h\PYZsq{},\PYZsq{}i\PYZsq{},\PYZsq{}j\PYZsq{},\PYZsq{}k\PYZsq{},\PYZsq{}l\PYZsq{},\PYZsq{}m\PYZsq{},\PYZsq{}n\PYZsq{},\PYZsq{}o\PYZsq{},\PYZsq{}p\PYZsq{},\PYZsq{}q\PYZsq{},\PYZsq{}r\PYZsq{},\PYZsq{}s\PYZsq{},\PYZsq{}t\PYZsq{},\PYZsq{}u\PYZsq{},\PYZsq{}v\PYZsq{},\PYZsq{}w\PYZsq{},\PYZsq{}x\PYZsq{},\PYZsq{}y\PYZsq{},\PYZsq{}z\PYZsq{}]}
+         
+         \PY{c+c1}{\PYZsh{}continuous\PYZus{}x.columns = [\PYZsq{}a\PYZsq{},\PYZsq{}b\PYZsq{},\PYZsq{}c\PYZsq{},\PYZsq{}d\PYZsq{},\PYZsq{}e\PYZsq{},\PYZsq{}f\PYZsq{},\PYZsq{}g\PYZsq{},\PYZsq{}h\PYZsq{},\PYZsq{}i\PYZsq{},\PYZsq{}j\PYZsq{},\PYZsq{}k\PYZsq{},\PYZsq{}l\PYZsq{},\PYZsq{}m\PYZsq{},\PYZsq{}n\PYZsq{},\PYZsq{}o\PYZsq{},\PYZsq{}p\PYZsq{},\PYZsq{}q\PYZsq{},\PYZsq{}r\PYZsq{},\PYZsq{}s\PYZsq{},\PYZsq{}t\PYZsq{},\PYZsq{}u\PYZsq{},\PYZsq{}v\PYZsq{},\PYZsq{}w\PYZsq{},\PYZsq{}x\PYZsq{},\PYZsq{}y\PYZsq{},\PYZsq{}z\PYZsq{}]}
+         
+         \PY{c+c1}{\PYZsh{}X\PYZus{}test.columns = [\PYZsq{}a\PYZsq{},\PYZsq{}b\PYZsq{},\PYZsq{}c\PYZsq{},\PYZsq{}d\PYZsq{},\PYZsq{}e\PYZsq{},\PYZsq{}f\PYZsq{},\PYZsq{}g\PYZsq{},\PYZsq{}h\PYZsq{},\PYZsq{}i\PYZsq{},\PYZsq{}j\PYZsq{},\PYZsq{}k\PYZsq{},\PYZsq{}l\PYZsq{},\PYZsq{}m\PYZsq{},\PYZsq{}n\PYZsq{},\PYZsq{}o\PYZsq{},\PYZsq{}p\PYZsq{},\PYZsq{}q\PYZsq{},\PYZsq{}r\PYZsq{},\PYZsq{}s\PYZsq{},\PYZsq{}t\PYZsq{},\PYZsq{}u\PYZsq{},\PYZsq{}v\PYZsq{},\PYZsq{}w\PYZsq{},\PYZsq{}x\PYZsq{},\PYZsq{}y\PYZsq{},\PYZsq{}z\PYZsq{}]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{continuous\PYZus{}x}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}20}]:}          0         1    2    3    4    5         6         7         8   \textbackslash{}
+         0  0.000000  0.196860  0.0  0.0  0.0  0.0  0.173367  0.044776  0.151954   
+         1  0.639456  0.196860  0.0  0.0  0.0  0.0  0.146194  0.069352  0.215518   
+         2  0.000000  0.007175  0.0  1.0  0.5  0.5  0.030151  0.002488  0.110062   
+         3  1.000000  0.196860  0.0  1.0  0.0  0.0  0.027638  0.002488  0.176475   
+         4  1.000000  0.009865  0.0  0.0  0.0  0.0  0.025126  0.009950  0.110062   
+         
+                  9         10        11        12        13  
+         0  0.013699  0.000000  0.635036  0.500000  0.382138  
+         1  0.062671  0.079365  0.575110  0.515178  0.382138  
+         2  0.000000  0.000000  0.284672  0.466667  0.125000  
+         3  0.003425  0.000000  0.613139  0.600000  0.382138  
+         4  0.062671  0.000000  0.678832  0.733333  0.263393  
+\end{Verbatim}
+            
+    \section{Handling the values for nominal
+values}\label{handling-the-values-for-nominal-values}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{nom\PYZus{}x} \PY{o}{=} \PY{n}{hcc}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{23}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{nom\PYZus{}x}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}22}]:}    Gender  Symptoms  Alcohol  Hepatitis B Surface Antigen  \textbackslash{}
+         0       1       0.0        1                          0.0   
+         1       0       NaN        0                          0.0   
+         2       1       0.0        1                          1.0   
+         3       1       1.0        1                          0.0   
+         4       1       1.0        1                          1.0   
+         
+            Hepatitis B e Antigen  Hepatitis B Core Antibody  \textbackslash{}
+         0                    0.0                        0.0   
+         1                    0.0                        0.0   
+         2                    0.0                        1.0   
+         3                    0.0                        0.0   
+         4                    0.0                        1.0   
+         
+            Hepatitis C Virus Antibody  Cirrhosis  Endemic Countries  Smoking  \textbackslash{}
+         0                         0.0          1                0.0      1.0   
+         1                         1.0          1                NaN      NaN   
+         2                         0.0          1                0.0      1.0   
+         3                         0.0          1                0.0      1.0   
+         4                         0.0          1                0.0      1.0   
+         
+                    {\ldots}            Arterial Hypertension  Chronic Renal Insufficiency  \textbackslash{}
+         0          {\ldots}                              0.0                          0.0   
+         1          {\ldots}                              1.0                          0.0   
+         2          {\ldots}                              1.0                          1.0   
+         3          {\ldots}                              1.0                          0.0   
+         4          {\ldots}                              1.0                          1.0   
+         
+            Human Immunodeficiency Virus  Nonalcoholic Steatohepatitis  \textbackslash{}
+         0                           0.0                           0.0   
+         1                           0.0                           0.0   
+         2                           0.0                           0.0   
+         3                           0.0                           0.0   
+         4                           0.0                           0.0   
+         
+            Esophageal Varices  Splenomegaly  Portal Hypertension  \textbackslash{}
+         0                 1.0           0.0                  0.0   
+         1                 1.0           0.0                  0.0   
+         2                 0.0           0.0                  1.0   
+         3                 0.0           0.0                  0.0   
+         4                 0.0           0.0                  0.0   
+         
+            Portal Vein Thrombosis  Liver Metastasis  Radiological Hallmark  
+         0                     0.0               0.0                    1.0  
+         1                     0.0               0.0                    1.0  
+         2                     0.0               1.0                    1.0  
+         3                     0.0               1.0                    1.0  
+         4                     0.0               0.0                    1.0  
+         
+         [5 rows x 23 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{imputer} \PY{o}{=} \PY{n}{Imputer}\PY{p}{(}\PY{n}{missing\PYZus{}values} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{NaN}\PY{l+s+s2}{\PYZdq{}} \PY{p}{,}\PY{n}{strategy} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{most\PYZus{}frequent}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)}  
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{imputer} \PY{o}{=} \PY{n}{imputer}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{nom\PYZus{}x}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{n}{nom\PYZus{}x} \PY{o}{=} \PY{n}{imputer}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{nom\PYZus{}x}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{nom\PYZus{}x} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{data} \PY{o}{=} \PY{n}{nom\PYZus{}x}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{n}{nom\PYZus{}x}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{aa}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ab}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ac}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ad}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ae}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{af}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ag}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ah}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ai}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{aj}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ak}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{al}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{am}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{an}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ao}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ap}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{aq}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{as}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{at}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{au}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{av}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{aw}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{n}{nom\PYZus{}x}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}28}]:}     aa   ab   ac   ad   ae   af   ag   ah   ai   aj {\ldots}    an   ao   ap   aq  \textbackslash{}
+         0  1.0  0.0  1.0  0.0  0.0  0.0  0.0  1.0  0.0  1.0 {\ldots}   0.0  0.0  0.0  0.0   
+         1  0.0  1.0  0.0  0.0  0.0  0.0  1.0  1.0  0.0  1.0 {\ldots}   1.0  0.0  0.0  0.0   
+         2  1.0  0.0  1.0  1.0  0.0  1.0  0.0  1.0  0.0  1.0 {\ldots}   1.0  1.0  0.0  0.0   
+         3  1.0  1.0  1.0  0.0  0.0  0.0  0.0  1.0  0.0  1.0 {\ldots}   1.0  0.0  0.0  0.0   
+         4  1.0  1.0  1.0  1.0  0.0  1.0  0.0  1.0  0.0  1.0 {\ldots}   1.0  1.0  0.0  0.0   
+         
+             ar   as   at   au   av   aw  
+         0  1.0  0.0  0.0  0.0  0.0  1.0  
+         1  1.0  0.0  0.0  0.0  0.0  1.0  
+         2  0.0  0.0  1.0  0.0  1.0  1.0  
+         3  0.0  0.0  0.0  0.0  1.0  1.0  
+         4  0.0  0.0  0.0  0.0  0.0  1.0  
+         
+         [5 rows x 23 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{frames} \PY{o}{=} \PY{p}{[}\PY{n}{nom\PYZus{}x}\PY{p}{,}\PY{n}{continuous\PYZus{}x}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{c+c1}{\PYZsh{}x\PYZus{}data = pd.concat(frames, axis=1)}
+         \PY{n}{x\PYZus{}data} \PY{o}{=} \PY{n}{continuous\PYZus{}x}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{n}{x\PYZus{}data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}31}]:}          0         1    2    3    4    5         6         7         8   \textbackslash{}
+         0  0.000000  0.196860  0.0  0.0  0.0  0.0  0.173367  0.044776  0.151954   
+         1  0.639456  0.196860  0.0  0.0  0.0  0.0  0.146194  0.069352  0.215518   
+         2  0.000000  0.007175  0.0  1.0  0.5  0.5  0.030151  0.002488  0.110062   
+         3  1.000000  0.196860  0.0  1.0  0.0  0.0  0.027638  0.002488  0.176475   
+         4  1.000000  0.009865  0.0  0.0  0.0  0.0  0.025126  0.009950  0.110062   
+         
+                  9         10        11        12        13  
+         0  0.013699  0.000000  0.635036  0.500000  0.382138  
+         1  0.062671  0.079365  0.575110  0.515178  0.382138  
+         2  0.000000  0.000000  0.284672  0.466667  0.125000  
+         3  0.003425  0.000000  0.613139  0.600000  0.382138  
+         4  0.062671  0.000000  0.678832  0.733333  0.263393  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{n}{x\PYZus{}data}\PY{o}{.}\PY{n}{sample}\PY{p}{(}\PY{n}{frac} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{)}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}32}]:}            0         1    2    3     4    5         6         7         8   \textbackslash{}
+         44   0.000000  0.196860  0.0  0.0  0.00  0.0  0.218593  0.047264  0.097801   
+         47   1.000000  0.398206  1.0  1.0  0.25  0.5  0.201005  0.161692  0.606629   
+         158  0.639456  0.196860  0.0  0.0  0.75  0.0  0.080402  0.000000  0.267410   
+         66   0.639456  0.176233  0.0  0.0  0.00  0.0  0.125628  0.027363  0.114149   
+         145  1.000000  0.196860  0.0  0.0  0.00  0.0  0.040201  0.011443  0.142758   
+         
+                    9         10        11        12        13  
+         44   0.013699  0.079365  0.773723  0.433333  0.382138  
+         47   0.136986  0.000000  0.656934  0.400000  0.281250  
+         158  0.062671  0.079365  0.233577  0.566667  0.382138  
+         66   0.006849  0.000000  0.773723  0.880000  0.419643  
+         145  0.007877  0.000000  0.306569  0.660000  0.382138  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{x\PYZus{}data}\PY{p}{,}\PY{n}{y\PYZus{}value}\PY{p}{,}\PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.3}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{101}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{c+c1}{\PYZsh{}X\PYZus{}train.columns = [\PYZsq{}a\PYZsq{},\PYZsq{}b\PYZsq{},\PYZsq{}c\PYZsq{},\PYZsq{}d\PYZsq{},\PYZsq{}e\PYZsq{},\PYZsq{}f\PYZsq{},\PYZsq{}g\PYZsq{},\PYZsq{}h\PYZsq{},\PYZsq{}i\PYZsq{},\PYZsq{}j\PYZsq{},\PYZsq{}k\PYZsq{},\PYZsq{}l\PYZsq{},\PYZsq{}m\PYZsq{},\PYZsq{}n\PYZsq{},\PYZsq{}o\PYZsq{},\PYZsq{}p\PYZsq{},\PYZsq{}q\PYZsq{},\PYZsq{}r\PYZsq{},\PYZsq{}s\PYZsq{},\PYZsq{}t\PYZsq{},\PYZsq{}u\PYZsq{},\PYZsq{}v\PYZsq{},\PYZsq{}w\PYZsq{},\PYZsq{}x\PYZsq{},\PYZsq{}y\PYZsq{},\PYZsq{}z\PYZsq{}]}
+         
+         \PY{c+c1}{\PYZsh{}x\PYZus{}data.columns = [\PYZsq{}a\PYZsq{},\PYZsq{}b\PYZsq{},\PYZsq{}c\PYZsq{},\PYZsq{}d\PYZsq{},\PYZsq{}e\PYZsq{},\PYZsq{}f\PYZsq{},\PYZsq{}g\PYZsq{},\PYZsq{}h\PYZsq{},\PYZsq{}i\PYZsq{},\PYZsq{}j\PYZsq{},\PYZsq{}k\PYZsq{},\PYZsq{}l\PYZsq{},\PYZsq{}m\PYZsq{},\PYZsq{}n\PYZsq{},\PYZsq{}o\PYZsq{},\PYZsq{}p\PYZsq{},\PYZsq{}q\PYZsq{},\PYZsq{}r\PYZsq{},\PYZsq{}s\PYZsq{},\PYZsq{}t\PYZsq{},\PYZsq{}u\PYZsq{},\PYZsq{}v\PYZsq{},\PYZsq{}w\PYZsq{},\PYZsq{}x\PYZsq{},\PYZsq{}y\PYZsq{},\PYZsq{}z\PYZsq{},\PYZsq{}aa\PYZsq{},\PYZsq{}ab\PYZsq{},\PYZsq{}ac\PYZsq{},\PYZsq{}ad\PYZsq{},\PYZsq{}ae\PYZsq{},\PYZsq{}af\PYZsq{},\PYZsq{}ag\PYZsq{},\PYZsq{}ah\PYZsq{},\PYZsq{}ai\PYZsq{},\PYZsq{}aj\PYZsq{},\PYZsq{}ak\PYZsq{},\PYZsq{}al\PYZsq{},\PYZsq{}am\PYZsq{},\PYZsq{}an\PYZsq{},\PYZsq{}ao\PYZsq{},\PYZsq{}ap\PYZsq{},\PYZsq{}aq\PYZsq{},\PYZsq{}ar\PYZsq{},\PYZsq{}as\PYZsq{},\PYZsq{}at\PYZsq{},\PYZsq{}au\PYZsq{},\PYZsq{}av\PYZsq{},\PYZsq{}aw\PYZsq{}]}
+         
+         \PY{c+c1}{\PYZsh{}X\PYZus{}test.columns = [\PYZsq{}a\PYZsq{},\PYZsq{}b\PYZsq{},\PYZsq{}c\PYZsq{},\PYZsq{}d\PYZsq{},\PYZsq{}e\PYZsq{},\PYZsq{}f\PYZsq{},\PYZsq{}g\PYZsq{},\PYZsq{}h\PYZsq{},\PYZsq{}i\PYZsq{},\PYZsq{}j\PYZsq{},\PYZsq{}k\PYZsq{},\PYZsq{}l\PYZsq{},\PYZsq{}m\PYZsq{},\PYZsq{}n\PYZsq{},\PYZsq{}o\PYZsq{},\PYZsq{}p\PYZsq{},\PYZsq{}q\PYZsq{},\PYZsq{}r\PYZsq{},\PYZsq{}s\PYZsq{},\PYZsq{}t\PYZsq{},\PYZsq{}u\PYZsq{},\PYZsq{}v\PYZsq{},\PYZsq{}w\PYZsq{},\PYZsq{}x\PYZsq{},\PYZsq{}y\PYZsq{},\PYZsq{}z\PYZsq{}]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}35}]:} \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{models} \PY{k}{import} \PY{n}{Sequential}
+         \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{layers} \PY{k}{import} \PY{n}{Dense}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k}{import} \PY{n}{confusion\PYZus{}matrix}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Using TensorFlow backend.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}36}]:} \PY{n}{classifier} \PY{o}{=} \PY{n}{Sequential}\PY{p}{(}\PY{p}{)}
+         \PY{n}{accuracy} \PY{o}{=} \PY{l+m+mi}{0}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}37}]:} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+             \PY{n}{classifier}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{n}{output\PYZus{}dim} \PY{o}{=} \PY{l+m+mi}{1024}\PY{p}{,} \PY{n}{init} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{uniform}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{activation} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{input\PYZus{}dim} \PY{o}{=} \PY{l+m+mi}{14}\PY{p}{)}\PY{p}{)}
+             \PY{n}{classifier}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{n}{output\PYZus{}dim} \PY{o}{=} \PY{l+m+mi}{512}\PY{p}{,} \PY{n}{init} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{uniform}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{activation} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+             \PY{n}{classifier}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{n}{output\PYZus{}dim} \PY{o}{=} \PY{l+m+mi}{256}\PY{p}{,} \PY{n}{init} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{uniform}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{activation} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+             \PY{n}{classifier}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{n}{output\PYZus{}dim} \PY{o}{=} \PY{l+m+mi}{128}\PY{p}{,} \PY{n}{init} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{uniform}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{activation} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+             \PY{n}{classifier}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{n}{output\PYZus{}dim} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{init} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{uniform}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{activation} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigmoid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+             \PY{n}{classifier}\PY{o}{.}\PY{n}{compile}\PY{p}{(}\PY{n}{optimizer} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{loss} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{binary\PYZus{}crossentropy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{metrics} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} 
+             \PY{n}{classifier}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{l+m+mi}{20}\PY{p}{,} \PY{n}{nb\PYZus{}epoch} \PY{o}{=} \PY{l+m+mi}{100}\PY{p}{)}
+             
+             \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+         \PY{l+s+sd}{    y\PYZus{}pred = classifier.predict(X\PYZus{}test)}
+         \PY{l+s+sd}{    y\PYZus{}pred = (y\PYZus{}pred \PYZgt{} 0.5)}
+         \PY{l+s+sd}{    cm = confusion\PYZus{}matrix(y\PYZus{}test, y\PYZus{}pred)}
+         \PY{l+s+sd}{    accuracy += ((cm[0][0]+cm[1][1])/(cm[1][0]+cm[1][1]+cm[0][0]+cm[0][1]))*100}
+         \PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Users\textbackslash{}USER\textbackslash{}Anaconda3\textbackslash{}envs\textbackslash{}keras\_env\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\_launcher.py:2: UserWarning: Update your `Dense` call to the Keras 2 API: `Dense(activation="relu", input\_dim=14, units=1024, kernel\_initializer="uniform")`
+  
+C:\textbackslash{}Users\textbackslash{}USER\textbackslash{}Anaconda3\textbackslash{}envs\textbackslash{}keras\_env\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\_launcher.py:3: UserWarning: Update your `Dense` call to the Keras 2 API: `Dense(activation="relu", units=512, kernel\_initializer="uniform")`
+  This is separate from the ipykernel package so we can avoid doing imports until
+C:\textbackslash{}Users\textbackslash{}USER\textbackslash{}Anaconda3\textbackslash{}envs\textbackslash{}keras\_env\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\_launcher.py:4: UserWarning: Update your `Dense` call to the Keras 2 API: `Dense(activation="relu", units=256, kernel\_initializer="uniform")`
+  after removing the cwd from sys.path.
+C:\textbackslash{}Users\textbackslash{}USER\textbackslash{}Anaconda3\textbackslash{}envs\textbackslash{}keras\_env\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\_launcher.py:5: UserWarning: Update your `Dense` call to the Keras 2 API: `Dense(activation="relu", units=128, kernel\_initializer="uniform")`
+  """
+C:\textbackslash{}Users\textbackslash{}USER\textbackslash{}Anaconda3\textbackslash{}envs\textbackslash{}keras\_env\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}ipykernel\_launcher.py:6: UserWarning: Update your `Dense` call to the Keras 2 API: `Dense(activation="sigmoid", units=1, kernel\_initializer="uniform")`
+  
+C:\textbackslash{}Users\textbackslash{}USER\textbackslash{}Anaconda3\textbackslash{}envs\textbackslash{}keras\_env\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}keras\textbackslash{}models.py:944: UserWarning: The `nb\_epoch` argument in `fit` has been renamed `epochs`.
+  warnings.warn('The `nb\_epoch` argument in `fit` '
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Epoch 1/100
+115/115 [==============================] - 3s 26ms/step - loss: 0.6919 - acc: 0.6000
+Epoch 2/100
+115/115 [==============================] - 0s 378us/step - loss: 0.6789 - acc: 0.6000
+Epoch 3/100
+115/115 [==============================] - 0s 396us/step - loss: 0.6325 - acc: 0.6087
+Epoch 4/100
+115/115 [==============================] - 0s 370us/step - loss: 0.5844 - acc: 0.6870
+Epoch 5/100
+115/115 [==============================] - 0s 405us/step - loss: 0.5813 - acc: 0.7043
+Epoch 6/100
+115/115 [==============================] - 0s 400us/step - loss: 0.5574 - acc: 0.6957
+Epoch 7/100
+115/115 [==============================] - 0s 392us/step - loss: 0.5268 - acc: 0.7217
+Epoch 8/100
+115/115 [==============================] - 0s 413us/step - loss: 0.5266 - acc: 0.7217
+Epoch 9/100
+115/115 [==============================] - 0s 431us/step - loss: 0.5039 - acc: 0.7391
+Epoch 10/100
+115/115 [==============================] - 0s 400us/step - loss: 0.4827 - acc: 0.7565
+Epoch 11/100
+115/115 [==============================] - 0s 374us/step - loss: 0.4642 - acc: 0.7565
+Epoch 12/100
+115/115 [==============================] - 0s 374us/step - loss: 0.4616 - acc: 0.7565
+Epoch 13/100
+115/115 [==============================] - 0s 383us/step - loss: 0.4728 - acc: 0.7652
+Epoch 14/100
+115/115 [==============================] - 0s 392us/step - loss: 0.4609 - acc: 0.7826
+Epoch 15/100
+115/115 [==============================] - 0s 413us/step - loss: 0.4063 - acc: 0.7913
+Epoch 16/100
+115/115 [==============================] - 0s 383us/step - loss: 0.3468 - acc: 0.8696
+Epoch 17/100
+115/115 [==============================] - 0s 448us/step - loss: 0.3373 - acc: 0.8348
+Epoch 18/100
+115/115 [==============================] - 0s 457us/step - loss: 0.2799 - acc: 0.9130
+Epoch 19/100
+115/115 [==============================] - 0s 409us/step - loss: 0.2780 - acc: 0.8783
+Epoch 20/100
+115/115 [==============================] - 0s 387us/step - loss: 0.2183 - acc: 0.8870
+Epoch 21/100
+115/115 [==============================] - 0s 396us/step - loss: 0.1787 - acc: 0.9304
+Epoch 22/100
+115/115 [==============================] - 0s 409us/step - loss: 0.1899 - acc: 0.9130
+Epoch 23/100
+115/115 [==============================] - 0s 379us/step - loss: 0.3910 - acc: 0.8087
+Epoch 24/100
+115/115 [==============================] - 0s 374us/step - loss: 0.3739 - acc: 0.8609
+Epoch 25/100
+115/115 [==============================] - 0s 379us/step - loss: 0.2752 - acc: 0.8696
+Epoch 26/100
+115/115 [==============================] - 0s 383us/step - loss: 0.2920 - acc: 0.8783
+Epoch 27/100
+115/115 [==============================] - 0s 374us/step - loss: 0.2406 - acc: 0.9478
+Epoch 28/100
+115/115 [==============================] - 0s 365us/step - loss: 0.1887 - acc: 0.9391
+Epoch 29/100
+115/115 [==============================] - 0s 361us/step - loss: 0.1500 - acc: 0.9391
+Epoch 30/100
+115/115 [==============================] - 0s 331us/step - loss: 0.1031 - acc: 0.9739
+Epoch 31/100
+115/115 [==============================] - 0s 400us/step - loss: 0.0736 - acc: 0.9739
+Epoch 32/100
+115/115 [==============================] - 0s 383us/step - loss: 0.0568 - acc: 1.0000
+Epoch 33/100
+115/115 [==============================] - 0s 396us/step - loss: 0.0356 - acc: 1.0000
+Epoch 34/100
+115/115 [==============================] - 0s 335us/step - loss: 0.0390 - acc: 0.9913
+Epoch 35/100
+115/115 [==============================] - 0s 365us/step - loss: 0.0210 - acc: 0.9913
+Epoch 36/100
+115/115 [==============================] - 0s 361us/step - loss: 0.0106 - acc: 1.0000
+Epoch 37/100
+115/115 [==============================] - 0s 387us/step - loss: 0.0164 - acc: 1.0000
+Epoch 38/100
+115/115 [==============================] - 0s 344us/step - loss: 0.0219 - acc: 0.9913
+Epoch 39/100
+115/115 [==============================] - 0s 452us/step - loss: 0.0567 - acc: 0.9739
+Epoch 40/100
+115/115 [==============================] - 0s 379us/step - loss: 0.1096 - acc: 0.9739
+Epoch 41/100
+115/115 [==============================] - 0s 370us/step - loss: 0.0472 - acc: 0.9826
+Epoch 42/100
+115/115 [==============================] - 0s 361us/step - loss: 0.0466 - acc: 0.9739
+Epoch 43/100
+115/115 [==============================] - 0s 370us/step - loss: 0.0757 - acc: 0.9652
+Epoch 44/100
+115/115 [==============================] - 0s 374us/step - loss: 0.1490 - acc: 0.9652
+Epoch 45/100
+115/115 [==============================] - 0s 383us/step - loss: 0.2173 - acc: 0.9043
+Epoch 46/100
+115/115 [==============================] - 0s 365us/step - loss: 0.1758 - acc: 0.9391
+Epoch 47/100
+115/115 [==============================] - 0s 365us/step - loss: 0.1742 - acc: 0.9304
+Epoch 48/100
+115/115 [==============================] - 0s 383us/step - loss: 0.0968 - acc: 0.9652
+Epoch 49/100
+115/115 [==============================] - 0s 335us/step - loss: 0.0649 - acc: 0.9913
+Epoch 50/100
+115/115 [==============================] - 0s 365us/step - loss: 0.0363 - acc: 1.0000
+Epoch 51/100
+115/115 [==============================] - 0s 344us/step - loss: 0.0289 - acc: 1.0000
+Epoch 52/100
+115/115 [==============================] - 0s 339us/step - loss: 0.0148 - acc: 1.0000
+Epoch 53/100
+115/115 [==============================] - 0s 348us/step - loss: 0.0104 - acc: 1.0000
+Epoch 54/100
+115/115 [==============================] - 0s 374us/step - loss: 0.0058 - acc: 1.0000
+Epoch 55/100
+115/115 [==============================] - 0s 352us/step - loss: 0.0048 - acc: 1.0000
+Epoch 56/100
+115/115 [==============================] - 0s 361us/step - loss: 0.0031 - acc: 1.0000
+Epoch 57/100
+115/115 [==============================] - 0s 348us/step - loss: 0.0027 - acc: 1.0000
+Epoch 58/100
+115/115 [==============================] - 0s 379us/step - loss: 0.0021 - acc: 1.0000
+Epoch 59/100
+115/115 [==============================] - 0s 335us/step - loss: 0.0017 - acc: 1.0000
+Epoch 60/100
+115/115 [==============================] - 0s 361us/step - loss: 0.0015 - acc: 1.0000
+Epoch 61/100
+115/115 [==============================] - 0s 344us/step - loss: 0.0013 - acc: 1.0000
+Epoch 62/100
+115/115 [==============================] - 0s 370us/step - loss: 0.0012 - acc: 1.0000
+Epoch 63/100
+115/115 [==============================] - 0s 357us/step - loss: 0.0010 - acc: 1.0000
+Epoch 64/100
+115/115 [==============================] - 0s 361us/step - loss: 9.2162e-04 - acc: 1.0000
+Epoch 65/100
+115/115 [==============================] - 0s 352us/step - loss: 8.1772e-04 - acc: 1.0000
+Epoch 66/100
+115/115 [==============================] - 0s 361us/step - loss: 7.2956e-04 - acc: 1.0000
+Epoch 67/100
+115/115 [==============================] - 0s 352us/step - loss: 6.7602e-04 - acc: 1.0000
+Epoch 68/100
+115/115 [==============================] - 0s 352us/step - loss: 5.9691e-04 - acc: 1.0000
+Epoch 69/100
+115/115 [==============================] - 0s 348us/step - loss: 5.4225e-04 - acc: 1.0000
+Epoch 70/100
+115/115 [==============================] - 0s 361us/step - loss: 4.9342e-04 - acc: 1.0000
+Epoch 71/100
+115/115 [==============================] - 0s 357us/step - loss: 4.5938e-04 - acc: 1.0000
+Epoch 72/100
+115/115 [==============================] - 0s 365us/step - loss: 4.2383e-04 - acc: 1.0000
+Epoch 73/100
+115/115 [==============================] - 0s 339us/step - loss: 3.6550e-04 - acc: 1.0000
+Epoch 74/100
+115/115 [==============================] - 0s 370us/step - loss: 3.2096e-04 - acc: 1.0000
+Epoch 75/100
+115/115 [==============================] - 0s 375us/step - loss: 2.8759e-04 - acc: 1.0000
+Epoch 76/100
+115/115 [==============================] - 0s 344us/step - loss: 2.4357e-04 - acc: 1.0000
+Epoch 77/100
+115/115 [==============================] - 0s 357us/step - loss: 2.0868e-04 - acc: 1.0000
+Epoch 78/100
+115/115 [==============================] - 0s 387us/step - loss: 1.7057e-04 - acc: 1.0000
+Epoch 79/100
+115/115 [==============================] - 0s 374us/step - loss: 1.4387e-04 - acc: 1.0000
+Epoch 80/100
+115/115 [==============================] - 0s 348us/step - loss: 1.1500e-04 - acc: 1.0000
+Epoch 81/100
+115/115 [==============================] - 0s 365us/step - loss: 9.0529e-05 - acc: 1.0000
+Epoch 82/100
+115/115 [==============================] - 0s 344us/step - loss: 7.5024e-05 - acc: 1.0000
+Epoch 83/100
+115/115 [==============================] - 0s 357us/step - loss: 6.1461e-05 - acc: 1.0000
+Epoch 84/100
+115/115 [==============================] - 0s 383us/step - loss: 4.9250e-05 - acc: 1.0000
+Epoch 85/100
+115/115 [==============================] - 0s 367us/step - loss: 4.1640e-05 - acc: 1.0000
+Epoch 86/100
+115/115 [==============================] - 0s 387us/step - loss: 3.4139e-05 - acc: 1.0000
+Epoch 87/100
+115/115 [==============================] - 0s 340us/step - loss: 2.8767e-05 - acc: 1.0000
+Epoch 88/100
+115/115 [==============================] - 0s 353us/step - loss: 2.4798e-05 - acc: 1.0000
+Epoch 89/100
+115/115 [==============================] - 0s 331us/step - loss: 2.1694e-05 - acc: 1.0000
+Epoch 90/100
+115/115 [==============================] - 0s 357us/step - loss: 1.8564e-05 - acc: 1.0000
+Epoch 91/100
+115/115 [==============================] - 0s 348us/step - loss: 1.6198e-05 - acc: 1.0000
+Epoch 92/100
+115/115 [==============================] - 0s 365us/step - loss: 1.4359e-05 - acc: 1.0000
+Epoch 93/100
+115/115 [==============================] - 0s 335us/step - loss: 1.2805e-05 - acc: 1.0000
+Epoch 94/100
+115/115 [==============================] - 0s 331us/step - loss: 1.1479e-05 - acc: 1.0000
+Epoch 95/100
+115/115 [==============================] - 0s 353us/step - loss: 1.0337e-05 - acc: 1.0000
+Epoch 96/100
+115/115 [==============================] - 0s 361us/step - loss: 9.5676e-06 - acc: 1.0000
+Epoch 97/100
+115/115 [==============================] - 0s 357us/step - loss: 8.5913e-06 - acc: 1.0000
+Epoch 98/100
+115/115 [==============================] - 0s 335us/step - loss: 7.8329e-06 - acc: 1.0000
+Epoch 99/100
+115/115 [==============================] - 0s 361us/step - loss: 7.2884e-06 - acc: 1.0000
+Epoch 100/100
+115/115 [==============================] - 0s 357us/step - loss: 6.7352e-06 - acc: 1.0000
+Epoch 1/100
+115/115 [==============================] - 1s 8ms/step - loss: 0.6882 - acc: 0.4957
+Epoch 2/100
+115/115 [==============================] - 0s 479us/step - loss: 0.6255 - acc: 0.6000
+Epoch 3/100
+115/115 [==============================] - 0s 500us/step - loss: 0.4643 - acc: 0.6000
+Epoch 4/100
+115/115 [==============================] - 0s 501us/step - loss: 0.3595 - acc: 0.6435
+Epoch 5/100
+115/115 [==============================] - 0s 505us/step - loss: 0.4002 - acc: 0.8261
+Epoch 6/100
+115/115 [==============================] - 0s 505us/step - loss: 0.3586 - acc: 0.8783
+Epoch 7/100
+115/115 [==============================] - 0s 566us/step - loss: 0.4894 - acc: 0.9478
+Epoch 8/100
+115/115 [==============================] - 0s 505us/step - loss: 0.4006 - acc: 0.9217
+Epoch 9/100
+115/115 [==============================] - 0s 483us/step - loss: 0.3891 - acc: 0.9130
+Epoch 10/100
+115/115 [==============================] - 0s 487us/step - loss: 0.3534 - acc: 0.9217
+Epoch 11/100
+115/115 [==============================] - 0s 501us/step - loss: 0.3849 - acc: 0.8696
+Epoch 12/100
+115/115 [==============================] - 0s 500us/step - loss: 0.3753 - acc: 0.8783
+Epoch 13/100
+115/115 [==============================] - 0s 465us/step - loss: 0.2897 - acc: 0.9043
+Epoch 14/100
+115/115 [==============================] - 0s 479us/step - loss: 0.2930 - acc: 0.8783
+Epoch 15/100
+115/115 [==============================] - 0s 492us/step - loss: 0.5037 - acc: 0.8783
+Epoch 16/100
+115/115 [==============================] - 0s 479us/step - loss: 0.3688 - acc: 0.8783
+Epoch 17/100
+115/115 [==============================] - 0s 509us/step - loss: 0.3620 - acc: 0.8609
+Epoch 18/100
+115/115 [==============================] - 0s 492us/step - loss: 0.4577 - acc: 0.7913
+Epoch 19/100
+115/115 [==============================] - 0s 492us/step - loss: 0.4140 - acc: 0.8000
+Epoch 20/100
+115/115 [==============================] - 0s 483us/step - loss: 0.3675 - acc: 0.8174
+Epoch 21/100
+115/115 [==============================] - 0s 496us/step - loss: 0.4029 - acc: 0.8435
+Epoch 22/100
+115/115 [==============================] - 0s 479us/step - loss: 0.3416 - acc: 0.8783
+Epoch 23/100
+115/115 [==============================] - 0s 501us/step - loss: 0.3743 - acc: 0.8870
+Epoch 24/100
+115/115 [==============================] - 0s 548us/step - loss: 0.3430 - acc: 0.9130
+Epoch 25/100
+115/115 [==============================] - 0s 531us/step - loss: 0.2775 - acc: 0.9217
+Epoch 26/100
+115/115 [==============================] - 0s 500us/step - loss: 0.3930 - acc: 0.8696
+Epoch 27/100
+115/115 [==============================] - 0s 570us/step - loss: 0.3304 - acc: 0.8957
+Epoch 28/100
+115/115 [==============================] - 0s 540us/step - loss: 0.3725 - acc: 0.8957
+Epoch 29/100
+115/115 [==============================] - 0s 505us/step - loss: 0.3957 - acc: 0.8696
+Epoch 30/100
+115/115 [==============================] - 0s 505us/step - loss: 0.3476 - acc: 0.8870
+Epoch 31/100
+115/115 [==============================] - 0s 492us/step - loss: 0.3220 - acc: 0.8957
+Epoch 32/100
+115/115 [==============================] - 0s 505us/step - loss: 0.2965 - acc: 0.9130
+Epoch 33/100
+115/115 [==============================] - 0s 509us/step - loss: 0.2762 - acc: 0.9217
+Epoch 34/100
+115/115 [==============================] - 0s 483us/step - loss: 0.2614 - acc: 0.9304
+Epoch 35/100
+115/115 [==============================] - 0s 535us/step - loss: 0.2550 - acc: 0.9304
+Epoch 36/100
+115/115 [==============================] - 0s 479us/step - loss: 0.2348 - acc: 0.9391
+Epoch 37/100
+115/115 [==============================] - 0s 487us/step - loss: 0.2121 - acc: 0.9478
+Epoch 38/100
+115/115 [==============================] - 0s 492us/step - loss: 0.1743 - acc: 0.9478
+Epoch 39/100
+115/115 [==============================] - 0s 492us/step - loss: 0.1138 - acc: 0.9739
+Epoch 40/100
+115/115 [==============================] - 0s 479us/step - loss: 0.0898 - acc: 0.9739
+Epoch 41/100
+115/115 [==============================] - 0s 492us/step - loss: 0.1243 - acc: 0.9652
+Epoch 42/100
+115/115 [==============================] - 0s 496us/step - loss: 0.1704 - acc: 0.9565
+Epoch 43/100
+115/115 [==============================] - 0s 518us/step - loss: 0.3323 - acc: 0.9304
+Epoch 44/100
+115/115 [==============================] - 0s 492us/step - loss: 0.3284 - acc: 0.9130
+Epoch 45/100
+115/115 [==============================] - 0s 500us/step - loss: 0.3721 - acc: 0.8957
+Epoch 46/100
+115/115 [==============================] - 0s 509us/step - loss: 0.3999 - acc: 0.8609
+Epoch 47/100
+115/115 [==============================] - 0s 479us/step - loss: 0.3755 - acc: 0.8783
+Epoch 48/100
+115/115 [==============================] - 0s 479us/step - loss: 0.3899 - acc: 0.8696
+Epoch 49/100
+115/115 [==============================] - 0s 483us/step - loss: 0.3677 - acc: 0.8783
+Epoch 50/100
+115/115 [==============================] - 0s 487us/step - loss: 0.3633 - acc: 0.8783
+Epoch 51/100
+115/115 [==============================] - 0s 496us/step - loss: 0.3317 - acc: 0.8957
+Epoch 52/100
+115/115 [==============================] - 0s 505us/step - loss: 0.3131 - acc: 0.9043
+Epoch 53/100
+115/115 [==============================] - 0s 531us/step - loss: 0.3157 - acc: 0.9043
+Epoch 54/100
+115/115 [==============================] - 0s 518us/step - loss: 0.2906 - acc: 0.9130
+Epoch 55/100
+115/115 [==============================] - 0s 496us/step - loss: 0.3237 - acc: 0.8957
+Epoch 56/100
+115/115 [==============================] - 0s 505us/step - loss: 0.2880 - acc: 0.9043
+Epoch 57/100
+115/115 [==============================] - 0s 496us/step - loss: 0.2985 - acc: 0.8957
+Epoch 58/100
+115/115 [==============================] - 0s 496us/step - loss: 0.3186 - acc: 0.8957
+Epoch 59/100
+115/115 [==============================] - 0s 496us/step - loss: 0.2421 - acc: 0.9391
+Epoch 60/100
+115/115 [==============================] - 0s 483us/step - loss: 0.3445 - acc: 0.9130
+Epoch 61/100
+115/115 [==============================] - 0s 501us/step - loss: 0.2657 - acc: 0.9391
+Epoch 62/100
+115/115 [==============================] - 0s 479us/step - loss: 0.2907 - acc: 0.9217
+Epoch 63/100
+115/115 [==============================] - 0s 479us/step - loss: 0.2445 - acc: 0.9391
+Epoch 64/100
+115/115 [==============================] - 0s 474us/step - loss: 0.2285 - acc: 0.9478
+Epoch 65/100
+115/115 [==============================] - 0s 487us/step - loss: 0.2107 - acc: 0.9478
+Epoch 66/100
+115/115 [==============================] - 0s 505us/step - loss: 0.1848 - acc: 0.9565
+Epoch 67/100
+115/115 [==============================] - 0s 483us/step - loss: 0.1831 - acc: 0.9565
+Epoch 68/100
+115/115 [==============================] - 0s 535us/step - loss: 0.1796 - acc: 0.9565
+Epoch 69/100
+115/115 [==============================] - 0s 505us/step - loss: 0.1774 - acc: 0.9565
+Epoch 70/100
+115/115 [==============================] - 0s 501us/step - loss: 0.1773 - acc: 0.9565
+Epoch 71/100
+115/115 [==============================] - 0s 492us/step - loss: 0.1783 - acc: 0.9565
+Epoch 72/100
+115/115 [==============================] - 0s 479us/step - loss: 0.1780 - acc: 0.9565
+Epoch 73/100
+115/115 [==============================] - 0s 482us/step - loss: 0.1777 - acc: 0.9565
+Epoch 74/100
+115/115 [==============================] - 0s 496us/step - loss: 0.1779 - acc: 0.9565
+Epoch 75/100
+115/115 [==============================] - 0s 483us/step - loss: 0.1763 - acc: 0.9565
+Epoch 76/100
+115/115 [==============================] - 0s 522us/step - loss: 0.1769 - acc: 0.9565
+Epoch 77/100
+115/115 [==============================] - 0s 515us/step - loss: 0.1749 - acc: 0.9565
+Epoch 78/100
+115/115 [==============================] - 0s 474us/step - loss: 0.1730 - acc: 0.9565
+Epoch 79/100
+115/115 [==============================] - 0s 483us/step - loss: 0.1503 - acc: 0.9652
+Epoch 80/100
+115/115 [==============================] - 0s 483us/step - loss: 0.1401 - acc: 0.9652
+Epoch 81/100
+115/115 [==============================] - 0s 492us/step - loss: 0.1274 - acc: 0.9652
+Epoch 82/100
+115/115 [==============================] - 0s 483us/step - loss: 0.0963 - acc: 0.9826
+Epoch 83/100
+115/115 [==============================] - 0s 479us/step - loss: 0.1879 - acc: 0.9391
+Epoch 84/100
+115/115 [==============================] - 0s 518us/step - loss: 0.1339 - acc: 0.9739
+Epoch 85/100
+115/115 [==============================] - 0s 501us/step - loss: 0.0918 - acc: 0.9739
+Epoch 86/100
+115/115 [==============================] - 0s 470us/step - loss: 0.0863 - acc: 0.9826
+Epoch 87/100
+115/115 [==============================] - 0s 526us/step - loss: 0.1071 - acc: 0.9739
+Epoch 88/100
+115/115 [==============================] - 0s 483us/step - loss: 0.0773 - acc: 0.9826
+Epoch 89/100
+115/115 [==============================] - 0s 479us/step - loss: 0.0818 - acc: 0.9739
+Epoch 90/100
+115/115 [==============================] - 0s 509us/step - loss: 0.0919 - acc: 0.9739
+Epoch 91/100
+115/115 [==============================] - 0s 505us/step - loss: 0.0964 - acc: 0.9739
+Epoch 92/100
+115/115 [==============================] - 0s 496us/step - loss: 0.0647 - acc: 0.9826
+Epoch 93/100
+115/115 [==============================] - 0s 562us/step - loss: 0.1548 - acc: 0.9565
+Epoch 94/100
+115/115 [==============================] - 0s 500us/step - loss: 0.1981 - acc: 0.9391
+Epoch 95/100
+115/115 [==============================] - 0s 496us/step - loss: 0.1752 - acc: 0.9478
+Epoch 96/100
+115/115 [==============================] - 0s 511us/step - loss: 0.1660 - acc: 0.9478
+Epoch 97/100
+115/115 [==============================] - 0s 479us/step - loss: 0.1647 - acc: 0.9478
+Epoch 98/100
+115/115 [==============================] - 0s 479us/step - loss: 0.1470 - acc: 0.9565
+Epoch 99/100
+115/115 [==============================] - 0s 483us/step - loss: 0.1366 - acc: 0.9565
+Epoch 100/100
+115/115 [==============================] - 0s 492us/step - loss: 0.1248 - acc: 0.9652
+Epoch 1/100
+115/115 [==============================] - 1s 12ms/step - loss: 0.6862 - acc: 0.7304
+Epoch 2/100
+115/115 [==============================] - 0s 635us/step - loss: 0.6276 - acc: 0.6000
+Epoch 3/100
+115/115 [==============================] - 0s 640us/step - loss: 0.4261 - acc: 0.6000
+Epoch 4/100
+115/115 [==============================] - 0s 639us/step - loss: 0.3166 - acc: 0.8522
+Epoch 5/100
+115/115 [==============================] - 0s 687us/step - loss: 0.2760 - acc: 0.9739
+Epoch 6/100
+115/115 [==============================] - 0s 653us/step - loss: 0.5789 - acc: 0.9478
+Epoch 7/100
+115/115 [==============================] - 0s 627us/step - loss: 0.3523 - acc: 0.9304
+Epoch 8/100
+115/115 [==============================] - 0s 627us/step - loss: 0.3120 - acc: 0.8870
+Epoch 9/100
+115/115 [==============================] - 0s 627us/step - loss: 0.3125 - acc: 0.8609
+Epoch 10/100
+115/115 [==============================] - 0s 635us/step - loss: 0.3261 - acc: 0.8522
+Epoch 11/100
+115/115 [==============================] - 0s 644us/step - loss: 0.3324 - acc: 0.8435
+Epoch 12/100
+115/115 [==============================] - 0s 640us/step - loss: 0.3313 - acc: 0.8435
+Epoch 13/100
+115/115 [==============================] - 0s 618us/step - loss: 0.3312 - acc: 0.8435
+Epoch 14/100
+115/115 [==============================] - 0s 618us/step - loss: 0.3320 - acc: 0.8435
+Epoch 15/100
+115/115 [==============================] - 0s 627us/step - loss: 0.3314 - acc: 0.8435
+Epoch 16/100
+115/115 [==============================] - 0s 627us/step - loss: 0.3308 - acc: 0.8435
+Epoch 17/100
+115/115 [==============================] - 0s 618us/step - loss: 0.3308 - acc: 0.8435
+Epoch 18/100
+115/115 [==============================] - 0s 653us/step - loss: 0.4867 - acc: 0.7217
+Epoch 19/100
+115/115 [==============================] - 0s 657us/step - loss: 0.5836 - acc: 0.6174
+Epoch 20/100
+115/115 [==============================] - 0s 657us/step - loss: 0.5169 - acc: 0.6609
+Epoch 21/100
+115/115 [==============================] - 0s 670us/step - loss: 0.5331 - acc: 0.6957
+Epoch 22/100
+115/115 [==============================] - 0s 635us/step - loss: 0.4742 - acc: 0.7130
+Epoch 23/100
+115/115 [==============================] - 0s 661us/step - loss: 0.5260 - acc: 0.6870
+Epoch 24/100
+115/115 [==============================] - 0s 661us/step - loss: 0.5190 - acc: 0.6522
+Epoch 25/100
+115/115 [==============================] - 0s 640us/step - loss: 0.5257 - acc: 0.6435
+Epoch 26/100
+115/115 [==============================] - 0s 613us/step - loss: 0.5348 - acc: 0.7043
+Epoch 27/100
+115/115 [==============================] - 0s 626us/step - loss: 0.4705 - acc: 0.7565
+Epoch 28/100
+115/115 [==============================] - 0s 644us/step - loss: 0.5137 - acc: 0.7478
+Epoch 29/100
+115/115 [==============================] - 0s 662us/step - loss: 0.4671 - acc: 0.7478
+Epoch 30/100
+115/115 [==============================] - 0s 696us/step - loss: 0.4351 - acc: 0.7652
+Epoch 31/100
+115/115 [==============================] - 0s 635us/step - loss: 0.4242 - acc: 0.7652
+Epoch 32/100
+115/115 [==============================] - 0s 609us/step - loss: 0.4219 - acc: 0.7652
+Epoch 33/100
+115/115 [==============================] - 0s 662us/step - loss: 0.4199 - acc: 0.7652
+Epoch 34/100
+115/115 [==============================] - 0s 657us/step - loss: 0.3943 - acc: 0.7913
+Epoch 35/100
+115/115 [==============================] - 0s 670us/step - loss: 0.4507 - acc: 0.7913
+Epoch 36/100
+115/115 [==============================] - 0s 718us/step - loss: 0.5335 - acc: 0.6522
+Epoch 37/100
+115/115 [==============================] - 0s 631us/step - loss: 0.5366 - acc: 0.6870
+Epoch 38/100
+115/115 [==============================] - 0s 635us/step - loss: 0.5423 - acc: 0.8522
+Epoch 39/100
+115/115 [==============================] - 0s 622us/step - loss: 0.5411 - acc: 0.8174
+Epoch 40/100
+115/115 [==============================] - 0s 657us/step - loss: 0.5733 - acc: 0.7913
+Epoch 41/100
+115/115 [==============================] - 0s 635us/step - loss: 0.5292 - acc: 0.7913
+Epoch 42/100
+115/115 [==============================] - 0s 622us/step - loss: 0.5209 - acc: 0.8000
+Epoch 43/100
+115/115 [==============================] - 0s 631us/step - loss: 0.4409 - acc: 0.8435
+Epoch 44/100
+115/115 [==============================] - 0s 653us/step - loss: 0.4494 - acc: 0.8435
+Epoch 45/100
+115/115 [==============================] - 0s 622us/step - loss: 0.4782 - acc: 0.8174
+Epoch 46/100
+115/115 [==============================] - 0s 618us/step - loss: 0.4476 - acc: 0.8261
+Epoch 47/100
+115/115 [==============================] - 0s 640us/step - loss: 0.4665 - acc: 0.8000
+Epoch 48/100
+115/115 [==============================] - 0s 613us/step - loss: 0.4650 - acc: 0.8087
+Epoch 49/100
+115/115 [==============================] - 0s 640us/step - loss: 0.4165 - acc: 0.8609
+Epoch 50/100
+115/115 [==============================] - 0s 657us/step - loss: 0.4239 - acc: 0.8609
+Epoch 51/100
+115/115 [==============================] - 0s 662us/step - loss: 0.3767 - acc: 0.8870
+Epoch 52/100
+115/115 [==============================] - 0s 627us/step - loss: 0.3946 - acc: 0.8696
+Epoch 53/100
+115/115 [==============================] - 0s 626us/step - loss: 0.3462 - acc: 0.8957
+Epoch 54/100
+115/115 [==============================] - 0s 627us/step - loss: 0.3774 - acc: 0.8783
+Epoch 55/100
+115/115 [==============================] - 0s 622us/step - loss: 0.4126 - acc: 0.8609
+Epoch 56/100
+115/115 [==============================] - 0s 618us/step - loss: 0.3440 - acc: 0.8957
+Epoch 57/100
+115/115 [==============================] - 0s 668us/step - loss: 0.3342 - acc: 0.8957
+Epoch 58/100
+115/115 [==============================] - 0s 639us/step - loss: 0.3356 - acc: 0.8957
+Epoch 59/100
+115/115 [==============================] - 0s 674us/step - loss: 0.3226 - acc: 0.9043
+Epoch 60/100
+115/115 [==============================] - 0s 631us/step - loss: 0.3580 - acc: 0.8783
+Epoch 61/100
+115/115 [==============================] - 0s 622us/step - loss: 0.3568 - acc: 0.8783
+Epoch 62/100
+115/115 [==============================] - 0s 655us/step - loss: 0.4066 - acc: 0.8435
+Epoch 63/100
+115/115 [==============================] - 0s 627us/step - loss: 0.3794 - acc: 0.8522
+Epoch 64/100
+115/115 [==============================] - 0s 627us/step - loss: 0.3736 - acc: 0.8609
+Epoch 65/100
+115/115 [==============================] - 0s 626us/step - loss: 0.3594 - acc: 0.8696
+Epoch 66/100
+115/115 [==============================] - 0s 635us/step - loss: 0.4989 - acc: 0.8348
+Epoch 67/100
+115/115 [==============================] - 0s 661us/step - loss: 0.4886 - acc: 0.8174
+Epoch 68/100
+115/115 [==============================] - 0s 622us/step - loss: 0.5120 - acc: 0.8261
+Epoch 69/100
+115/115 [==============================] - 0s 614us/step - loss: 0.4903 - acc: 0.8348
+Epoch 70/100
+115/115 [==============================] - 0s 666us/step - loss: 0.4515 - acc: 0.8348
+Epoch 71/100
+115/115 [==============================] - 0s 653us/step - loss: 0.4563 - acc: 0.8348
+Epoch 72/100
+115/115 [==============================] - 0s 666us/step - loss: 0.4488 - acc: 0.8348
+Epoch 73/100
+115/115 [==============================] - 0s 631us/step - loss: 0.4601 - acc: 0.8348
+Epoch 74/100
+115/115 [==============================] - 0s 640us/step - loss: 0.4509 - acc: 0.8348
+Epoch 75/100
+115/115 [==============================] - 0s 658us/step - loss: 0.4500 - acc: 0.8348
+Epoch 76/100
+115/115 [==============================] - 0s 666us/step - loss: 0.4475 - acc: 0.8348
+Epoch 77/100
+115/115 [==============================] - 0s 631us/step - loss: 0.4511 - acc: 0.8348
+Epoch 78/100
+115/115 [==============================] - 0s 633us/step - loss: 0.4456 - acc: 0.8348
+Epoch 79/100
+115/115 [==============================] - 0s 631us/step - loss: 0.4451 - acc: 0.8348
+Epoch 80/100
+115/115 [==============================] - 0s 622us/step - loss: 0.4465 - acc: 0.8348
+Epoch 81/100
+115/115 [==============================] - 0s 627us/step - loss: 0.4449 - acc: 0.8348
+Epoch 82/100
+115/115 [==============================] - 0s 644us/step - loss: 0.4457 - acc: 0.8348
+Epoch 83/100
+115/115 [==============================] - 0s 631us/step - loss: 0.4476 - acc: 0.8348
+Epoch 84/100
+115/115 [==============================] - 0s 631us/step - loss: 0.4454 - acc: 0.8348
+Epoch 85/100
+115/115 [==============================] - 0s 653us/step - loss: 0.4458 - acc: 0.8348
+Epoch 86/100
+115/115 [==============================] - 0s 653us/step - loss: 0.4531 - acc: 0.8348
+Epoch 87/100
+115/115 [==============================] - 0s 670us/step - loss: 0.4459 - acc: 0.8348
+Epoch 88/100
+115/115 [==============================] - 0s 631us/step - loss: 0.4463 - acc: 0.8348
+Epoch 89/100
+115/115 [==============================] - 0s 653us/step - loss: 0.4460 - acc: 0.8348
+Epoch 90/100
+115/115 [==============================] - 0s 735us/step - loss: 0.4431 - acc: 0.8348
+Epoch 91/100
+115/115 [==============================] - 0s 657us/step - loss: 0.4596 - acc: 0.8348
+Epoch 92/100
+115/115 [==============================] - 0s 644us/step - loss: 0.4433 - acc: 0.8348
+Epoch 93/100
+115/115 [==============================] - 0s 635us/step - loss: 0.4515 - acc: 0.8348
+Epoch 94/100
+115/115 [==============================] - 0s 632us/step - loss: 0.4482 - acc: 0.8348
+Epoch 95/100
+115/115 [==============================] - 0s 631us/step - loss: 0.4521 - acc: 0.8348
+Epoch 96/100
+115/115 [==============================] - 0s 635us/step - loss: 0.4444 - acc: 0.8348
+Epoch 97/100
+115/115 [==============================] - 0s 626us/step - loss: 0.4484 - acc: 0.8348
+Epoch 98/100
+115/115 [==============================] - 0s 635us/step - loss: 0.4498 - acc: 0.8348
+Epoch 99/100
+115/115 [==============================] - 0s 635us/step - loss: 0.4461 - acc: 0.8348
+Epoch 100/100
+115/115 [==============================] - 0s 657us/step - loss: 0.4463 - acc: 0.8348
+Epoch 1/100
+115/115 [==============================] - 2s 15ms/step - loss: 0.6907 - acc: 0.5478
+Epoch 2/100
+115/115 [==============================] - 0s 783us/step - loss: 0.6620 - acc: 0.6000
+Epoch 3/100
+115/115 [==============================] - 0s 788us/step - loss: 0.5899 - acc: 0.6000
+Epoch 4/100
+115/115 [==============================] - 0s 822us/step - loss: 0.5694 - acc: 0.6000
+Epoch 5/100
+115/115 [==============================] - 0s 831us/step - loss: 0.5490 - acc: 0.7130
+Epoch 6/100
+115/115 [==============================] - 0s 814us/step - loss: 0.5467 - acc: 0.8348
+Epoch 7/100
+115/115 [==============================] - 0s 801us/step - loss: 0.5442 - acc: 0.8348
+Epoch 8/100
+115/115 [==============================] - 0s 805us/step - loss: 0.5434 - acc: 0.8348
+Epoch 9/100
+115/115 [==============================] - 0s 774us/step - loss: 0.5232 - acc: 0.8348
+Epoch 10/100
+115/115 [==============================] - 0s 805us/step - loss: 0.5021 - acc: 0.8348
+Epoch 11/100
+115/115 [==============================] - 0s 797us/step - loss: 0.4698 - acc: 0.8348
+Epoch 12/100
+115/115 [==============================] - 0s 809us/step - loss: 0.4430 - acc: 0.8348
+Epoch 13/100
+115/115 [==============================] - 0s 844us/step - loss: 0.4461 - acc: 0.8348
+Epoch 14/100
+115/115 [==============================] - 0s 770us/step - loss: 0.4503 - acc: 0.8348
+Epoch 15/100
+115/115 [==============================] - 0s 782us/step - loss: 0.4473 - acc: 0.8348
+Epoch 16/100
+115/115 [==============================] - 0s 801us/step - loss: 0.4465 - acc: 0.8348
+Epoch 17/100
+115/115 [==============================] - 0s 814us/step - loss: 0.4481 - acc: 0.8348
+Epoch 18/100
+115/115 [==============================] - 0s 814us/step - loss: 0.4549 - acc: 0.8348
+Epoch 19/100
+115/115 [==============================] - 0s 788us/step - loss: 0.4426 - acc: 0.8348
+Epoch 20/100
+115/115 [==============================] - 0s 774us/step - loss: 0.4502 - acc: 0.8348
+Epoch 21/100
+115/115 [==============================] - 0s 809us/step - loss: 0.4480 - acc: 0.8348
+Epoch 22/100
+115/115 [==============================] - 0s 779us/step - loss: 0.4490 - acc: 0.8348
+Epoch 23/100
+115/115 [==============================] - 0s 833us/step - loss: 0.4465 - acc: 0.8348
+Epoch 24/100
+115/115 [==============================] - 0s 814us/step - loss: 0.4480 - acc: 0.8348
+Epoch 25/100
+115/115 [==============================] - 0s 809us/step - loss: 0.4450 - acc: 0.8348
+Epoch 26/100
+115/115 [==============================] - 0s 796us/step - loss: 0.4493 - acc: 0.8348
+Epoch 27/100
+115/115 [==============================] - 0s 796us/step - loss: 0.4485 - acc: 0.8348
+Epoch 28/100
+115/115 [==============================] - 0s 827us/step - loss: 0.4461 - acc: 0.8348
+Epoch 29/100
+115/115 [==============================] - 0s 788us/step - loss: 0.4472 - acc: 0.8348
+Epoch 30/100
+115/115 [==============================] - 0s 809us/step - loss: 0.4479 - acc: 0.8348
+Epoch 31/100
+115/115 [==============================] - 0s 805us/step - loss: 0.4449 - acc: 0.8348
+Epoch 32/100
+115/115 [==============================] - 0s 775us/step - loss: 0.4467 - acc: 0.8348
+Epoch 33/100
+115/115 [==============================] - 0s 806us/step - loss: 0.4450 - acc: 0.8348
+Epoch 34/100
+115/115 [==============================] - 0s 809us/step - loss: 0.4505 - acc: 0.8348
+Epoch 35/100
+115/115 [==============================] - 0s 788us/step - loss: 0.4467 - acc: 0.8348
+Epoch 36/100
+115/115 [==============================] - 0s 783us/step - loss: 0.4474 - acc: 0.8348
+Epoch 37/100
+115/115 [==============================] - 0s 801us/step - loss: 0.4439 - acc: 0.8348
+Epoch 38/100
+115/115 [==============================] - 0s 822us/step - loss: 0.4456 - acc: 0.8348
+Epoch 39/100
+115/115 [==============================] - 0s 784us/step - loss: 0.4466 - acc: 0.8348
+Epoch 40/100
+115/115 [==============================] - 0s 796us/step - loss: 0.4451 - acc: 0.8348
+Epoch 41/100
+115/115 [==============================] - 0s 783us/step - loss: 0.4494 - acc: 0.8348
+Epoch 42/100
+115/115 [==============================] - 0s 796us/step - loss: 0.4458 - acc: 0.8348
+Epoch 43/100
+115/115 [==============================] - 0s 792us/step - loss: 0.4458 - acc: 0.8348
+Epoch 44/100
+115/115 [==============================] - 0s 779us/step - loss: 0.4465 - acc: 0.8348
+Epoch 45/100
+115/115 [==============================] - 0s 783us/step - loss: 0.4457 - acc: 0.8348
+Epoch 46/100
+115/115 [==============================] - 0s 792us/step - loss: 0.4469 - acc: 0.8348
+Epoch 47/100
+115/115 [==============================] - 0s 792us/step - loss: 0.4450 - acc: 0.8348
+Epoch 48/100
+115/115 [==============================] - 0s 803us/step - loss: 0.4500 - acc: 0.8348
+Epoch 49/100
+115/115 [==============================] - 0s 840us/step - loss: 0.4452 - acc: 0.8348
+Epoch 50/100
+115/115 [==============================] - 0s 809us/step - loss: 0.4453 - acc: 0.8348
+Epoch 51/100
+115/115 [==============================] - 0s 800us/step - loss: 0.4477 - acc: 0.8348
+Epoch 52/100
+115/115 [==============================] - 0s 783us/step - loss: 0.4480 - acc: 0.8348
+Epoch 53/100
+115/115 [==============================] - 0s 792us/step - loss: 0.4460 - acc: 0.8348
+Epoch 54/100
+115/115 [==============================] - 0s 779us/step - loss: 0.4486 - acc: 0.8348
+Epoch 55/100
+115/115 [==============================] - 0s 827us/step - loss: 0.4509 - acc: 0.8348
+Epoch 56/100
+115/115 [==============================] - 0s 805us/step - loss: 0.4433 - acc: 0.8348
+Epoch 57/100
+115/115 [==============================] - 0s 792us/step - loss: 0.4461 - acc: 0.8348
+Epoch 58/100
+115/115 [==============================] - 0s 827us/step - loss: 0.4480 - acc: 0.8348
+Epoch 59/100
+115/115 [==============================] - 0s 822us/step - loss: 0.4471 - acc: 0.8348
+Epoch 60/100
+115/115 [==============================] - 0s 835us/step - loss: 0.4480 - acc: 0.8348
+Epoch 61/100
+115/115 [==============================] - 0s 835us/step - loss: 0.4524 - acc: 0.8348
+Epoch 62/100
+115/115 [==============================] - 0s 805us/step - loss: 0.4456 - acc: 0.8348
+Epoch 63/100
+115/115 [==============================] - 0s 783us/step - loss: 0.4459 - acc: 0.8348
+Epoch 64/100
+115/115 [==============================] - 0s 783us/step - loss: 0.4461 - acc: 0.8348
+Epoch 65/100
+115/115 [==============================] - 0s 792us/step - loss: 0.4461 - acc: 0.8348
+Epoch 66/100
+115/115 [==============================] - 0s 787us/step - loss: 0.4463 - acc: 0.8348
+Epoch 67/100
+115/115 [==============================] - 0s 796us/step - loss: 0.4590 - acc: 0.8348
+Epoch 68/100
+115/115 [==============================] - 0s 809us/step - loss: 0.4451 - acc: 0.8348
+Epoch 69/100
+115/115 [==============================] - 0s 814us/step - loss: 0.4529 - acc: 0.8348
+Epoch 70/100
+115/115 [==============================] - 0s 783us/step - loss: 0.4501 - acc: 0.8348
+Epoch 71/100
+115/115 [==============================] - 0s 801us/step - loss: 0.4480 - acc: 0.8348
+Epoch 72/100
+115/115 [==============================] - 0s 809us/step - loss: 0.4460 - acc: 0.8348
+Epoch 73/100
+115/115 [==============================] - 0s 809us/step - loss: 0.4536 - acc: 0.8348
+Epoch 74/100
+115/115 [==============================] - 0s 805us/step - loss: 0.4468 - acc: 0.8348
+Epoch 75/100
+115/115 [==============================] - 0s 783us/step - loss: 0.4477 - acc: 0.8348
+Epoch 76/100
+115/115 [==============================] - 0s 814us/step - loss: 0.4485 - acc: 0.8348
+Epoch 77/100
+115/115 [==============================] - 0s 814us/step - loss: 0.4453 - acc: 0.8348
+Epoch 78/100
+115/115 [==============================] - 0s 827us/step - loss: 0.4463 - acc: 0.8348
+Epoch 79/100
+115/115 [==============================] - 0s 802us/step - loss: 0.4450 - acc: 0.8348
+Epoch 80/100
+115/115 [==============================] - 0s 788us/step - loss: 0.4501 - acc: 0.8348
+Epoch 81/100
+115/115 [==============================] - 0s 787us/step - loss: 0.4475 - acc: 0.8348
+Epoch 82/100
+115/115 [==============================] - 0s 783us/step - loss: 0.4489 - acc: 0.8348
+Epoch 83/100
+115/115 [==============================] - 0s 792us/step - loss: 0.4485 - acc: 0.8348
+Epoch 84/100
+115/115 [==============================] - 0s 796us/step - loss: 0.4439 - acc: 0.8348
+Epoch 85/100
+115/115 [==============================] - 0s 809us/step - loss: 0.4462 - acc: 0.8348
+Epoch 86/100
+115/115 [==============================] - 0s 779us/step - loss: 0.4449 - acc: 0.8348
+Epoch 87/100
+115/115 [==============================] - 0s 798us/step - loss: 0.4455 - acc: 0.8348
+Epoch 88/100
+115/115 [==============================] - 0s 801us/step - loss: 0.4485 - acc: 0.8348
+Epoch 89/100
+115/115 [==============================] - 0s 788us/step - loss: 0.4447 - acc: 0.8348
+Epoch 90/100
+115/115 [==============================] - 0s 783us/step - loss: 0.4449 - acc: 0.8348
+Epoch 91/100
+115/115 [==============================] - 0s 792us/step - loss: 0.4494 - acc: 0.8348
+Epoch 92/100
+115/115 [==============================] - 0s 827us/step - loss: 0.4527 - acc: 0.8348
+Epoch 93/100
+115/115 [==============================] - 0s 805us/step - loss: 0.4474 - acc: 0.8348
+Epoch 94/100
+115/115 [==============================] - 0s 796us/step - loss: 0.4456 - acc: 0.8348
+Epoch 95/100
+115/115 [==============================] - 0s 805us/step - loss: 0.4511 - acc: 0.8348
+Epoch 96/100
+115/115 [==============================] - 0s 813us/step - loss: 0.4430 - acc: 0.8348
+Epoch 97/100
+115/115 [==============================] - 0s 792us/step - loss: 0.4492 - acc: 0.8348
+Epoch 98/100
+115/115 [==============================] - 0s 788us/step - loss: 0.4479 - acc: 0.8348
+Epoch 99/100
+115/115 [==============================] - 0s 805us/step - loss: 0.4449 - acc: 0.8348
+Epoch 100/100
+115/115 [==============================] - 0s 801us/step - loss: 0.4608 - acc: 0.8348
+Epoch 1/100
+115/115 [==============================] - 2s 19ms/step - loss: 0.6897 - acc: 0.5304
+Epoch 2/100
+115/115 [==============================] - 0s 953us/step - loss: 0.6506 - acc: 0.6000
+Epoch 3/100
+115/115 [==============================] - 0s 944us/step - loss: 0.5884 - acc: 0.6000
+Epoch 4/100
+115/115 [==============================] - 0s 970us/step - loss: 0.5682 - acc: 0.6000
+Epoch 5/100
+115/115 [==============================] - 0s 931us/step - loss: 0.5493 - acc: 0.6348
+Epoch 6/100
+115/115 [==============================] - 0s 953us/step - loss: 0.5466 - acc: 0.8348
+Epoch 7/100
+115/115 [==============================] - 0s 953us/step - loss: 0.5527 - acc: 0.8348
+Epoch 8/100
+115/115 [==============================] - 0s 953us/step - loss: 0.5453 - acc: 0.8348
+Epoch 9/100
+115/115 [==============================] - 0s 940us/step - loss: 0.5448 - acc: 0.8348
+Epoch 10/100
+115/115 [==============================] - 0s 958us/step - loss: 0.5308 - acc: 0.8348
+Epoch 11/100
+115/115 [==============================] - 0s 957us/step - loss: 0.5020 - acc: 0.8348
+Epoch 12/100
+115/115 [==============================] - 0s 927us/step - loss: 0.4776 - acc: 0.8348
+Epoch 13/100
+115/115 [==============================] - 0s 935us/step - loss: 0.4470 - acc: 0.8348
+Epoch 14/100
+115/115 [==============================] - 0s 958us/step - loss: 0.4527 - acc: 0.8348
+Epoch 15/100
+115/115 [==============================] - 0s 944us/step - loss: 0.4519 - acc: 0.8348
+Epoch 16/100
+115/115 [==============================] - 0s 953us/step - loss: 0.4463 - acc: 0.8348
+Epoch 17/100
+115/115 [==============================] - 0s 927us/step - loss: 0.4484 - acc: 0.8348
+Epoch 18/100
+115/115 [==============================] - 0s 975us/step - loss: 0.4476 - acc: 0.8348
+Epoch 19/100
+115/115 [==============================] - 0s 928us/step - loss: 0.4436 - acc: 0.8348
+Epoch 20/100
+115/115 [==============================] - 0s 962us/step - loss: 0.4543 - acc: 0.8348
+Epoch 21/100
+115/115 [==============================] - 0s 940us/step - loss: 0.4490 - acc: 0.8348
+Epoch 22/100
+115/115 [==============================] - 0s 966us/step - loss: 0.4490 - acc: 0.8348
+Epoch 23/100
+115/115 [==============================] - 0s 931us/step - loss: 0.4466 - acc: 0.8348
+Epoch 24/100
+115/115 [==============================] - 0s 927us/step - loss: 0.4454 - acc: 0.8348
+Epoch 25/100
+115/115 [==============================] - 0s 923us/step - loss: 0.4461 - acc: 0.8348
+Epoch 26/100
+115/115 [==============================] - 0s 957us/step - loss: 0.4458 - acc: 0.8348
+Epoch 27/100
+115/115 [==============================] - 0s 953us/step - loss: 0.4491 - acc: 0.8348
+Epoch 28/100
+115/115 [==============================] - 0s 940us/step - loss: 0.4462 - acc: 0.8348
+Epoch 29/100
+115/115 [==============================] - 0s 931us/step - loss: 0.4474 - acc: 0.8348
+Epoch 30/100
+115/115 [==============================] - 0s 949us/step - loss: 0.4464 - acc: 0.8348
+Epoch 31/100
+115/115 [==============================] - 0s 968us/step - loss: 0.4472 - acc: 0.8348
+Epoch 32/100
+115/115 [==============================] - 0s 962us/step - loss: 0.4439 - acc: 0.8348
+Epoch 33/100
+115/115 [==============================] - 0s 918us/step - loss: 0.4468 - acc: 0.8348
+Epoch 34/100
+115/115 [==============================] - 0s 930us/step - loss: 0.4457 - acc: 0.8348
+Epoch 35/100
+115/115 [==============================] - 0s 966us/step - loss: 0.4464 - acc: 0.8348
+Epoch 36/100
+115/115 [==============================] - 0s 940us/step - loss: 0.4459 - acc: 0.8348
+Epoch 37/100
+115/115 [==============================] - 0s 966us/step - loss: 0.4509 - acc: 0.8348
+Epoch 38/100
+115/115 [==============================] - 0s 927us/step - loss: 0.4434 - acc: 0.8348
+Epoch 39/100
+115/115 [==============================] - 0s 931us/step - loss: 0.4451 - acc: 0.8348
+Epoch 40/100
+115/115 [==============================] - 0s 940us/step - loss: 0.4485 - acc: 0.8348
+Epoch 41/100
+115/115 [==============================] - 0s 962us/step - loss: 0.4499 - acc: 0.8348
+Epoch 42/100
+115/115 [==============================] - 0s 931us/step - loss: 0.4470 - acc: 0.8348
+Epoch 43/100
+115/115 [==============================] - 0s 923us/step - loss: 0.4474 - acc: 0.8348
+Epoch 44/100
+115/115 [==============================] - 0s 927us/step - loss: 0.4480 - acc: 0.8348
+Epoch 45/100
+115/115 [==============================] - 0s 948us/step - loss: 0.4450 - acc: 0.8348
+Epoch 46/100
+115/115 [==============================] - 0s 940us/step - loss: 0.4454 - acc: 0.8348
+Epoch 47/100
+115/115 [==============================] - 0s 935us/step - loss: 0.4477 - acc: 0.8348
+Epoch 48/100
+115/115 [==============================] - 0s 927us/step - loss: 0.4495 - acc: 0.8348
+Epoch 49/100
+115/115 [==============================] - 0s 944us/step - loss: 0.4452 - acc: 0.8348
+Epoch 50/100
+115/115 [==============================] - 0s 931us/step - loss: 0.4466 - acc: 0.8348
+Epoch 51/100
+115/115 [==============================] - 0s 935us/step - loss: 0.4493 - acc: 0.8348
+Epoch 52/100
+115/115 [==============================] - 0s 953us/step - loss: 0.4573 - acc: 0.8348
+Epoch 53/100
+115/115 [==============================] - 0s 962us/step - loss: 0.4461 - acc: 0.8348
+Epoch 54/100
+115/115 [==============================] - 0s 983us/step - loss: 0.4460 - acc: 0.8348
+Epoch 55/100
+115/115 [==============================] - 0s 953us/step - loss: 0.4504 - acc: 0.8348
+Epoch 56/100
+115/115 [==============================] - 0s 927us/step - loss: 0.4464 - acc: 0.8348
+Epoch 57/100
+115/115 [==============================] - 0s 935us/step - loss: 0.4467 - acc: 0.8348
+Epoch 58/100
+115/115 [==============================] - 0s 940us/step - loss: 0.4471 - acc: 0.8348
+Epoch 59/100
+115/115 [==============================] - 0s 932us/step - loss: 0.4463 - acc: 0.8348
+Epoch 60/100
+115/115 [==============================] - 0s 922us/step - loss: 0.4460 - acc: 0.8348
+Epoch 61/100
+115/115 [==============================] - 0s 927us/step - loss: 0.4477 - acc: 0.8348
+Epoch 62/100
+115/115 [==============================] - 0s 931us/step - loss: 0.4476 - acc: 0.8348
+Epoch 63/100
+115/115 [==============================] - 0s 984us/step - loss: 0.4481 - acc: 0.8348
+Epoch 64/100
+115/115 [==============================] - 0s 975us/step - loss: 0.4585 - acc: 0.8348
+Epoch 65/100
+115/115 [==============================] - 0s 922us/step - loss: 0.4549 - acc: 0.8348
+Epoch 66/100
+115/115 [==============================] - 0s 958us/step - loss: 0.4479 - acc: 0.8348
+Epoch 67/100
+115/115 [==============================] - 0s 940us/step - loss: 0.4507 - acc: 0.8348
+Epoch 68/100
+115/115 [==============================] - 0s 935us/step - loss: 0.4489 - acc: 0.8348
+Epoch 69/100
+115/115 [==============================] - 0s 992us/step - loss: 0.4469 - acc: 0.8348
+Epoch 70/100
+115/115 [==============================] - 0s 954us/step - loss: 0.4457 - acc: 0.8348
+Epoch 71/100
+115/115 [==============================] - 0s 931us/step - loss: 0.4447 - acc: 0.8348
+Epoch 72/100
+115/115 [==============================] - 0s 927us/step - loss: 0.4468 - acc: 0.8348
+Epoch 73/100
+115/115 [==============================] - 0s 953us/step - loss: 0.4461 - acc: 0.8348
+Epoch 74/100
+115/115 [==============================] - 0s 948us/step - loss: 0.4447 - acc: 0.8348
+Epoch 75/100
+115/115 [==============================] - 0s 940us/step - loss: 0.4462 - acc: 0.8348
+Epoch 76/100
+115/115 [==============================] - 0s 922us/step - loss: 0.4489 - acc: 0.8348
+Epoch 77/100
+115/115 [==============================] - 0s 936us/step - loss: 0.4458 - acc: 0.8348
+Epoch 78/100
+115/115 [==============================] - 0s 966us/step - loss: 0.4476 - acc: 0.8348
+Epoch 79/100
+115/115 [==============================] - 0s 944us/step - loss: 0.4471 - acc: 0.8348
+Epoch 80/100
+115/115 [==============================] - 0s 966us/step - loss: 0.4483 - acc: 0.8348
+Epoch 81/100
+115/115 [==============================] - 0s 940us/step - loss: 0.4488 - acc: 0.8348
+Epoch 82/100
+115/115 [==============================] - 0s 949us/step - loss: 0.4458 - acc: 0.8348
+Epoch 83/100
+115/115 [==============================] - 0s 966us/step - loss: 0.4452 - acc: 0.8348
+Epoch 84/100
+115/115 [==============================] - 0s 962us/step - loss: 0.4453 - acc: 0.8348
+Epoch 85/100
+115/115 [==============================] - 0s 944us/step - loss: 0.4484 - acc: 0.8348
+Epoch 86/100
+115/115 [==============================] - 0s 927us/step - loss: 0.4450 - acc: 0.8348
+Epoch 87/100
+115/115 [==============================] - 0s 944us/step - loss: 0.4453 - acc: 0.8348
+Epoch 88/100
+115/115 [==============================] - 0s 918us/step - loss: 0.4486 - acc: 0.8348
+Epoch 89/100
+115/115 [==============================] - 0s 957us/step - loss: 0.4510 - acc: 0.8348
+Epoch 90/100
+115/115 [==============================] - 0s 944us/step - loss: 0.4483 - acc: 0.8348
+Epoch 91/100
+115/115 [==============================] - 0s 944us/step - loss: 0.4456 - acc: 0.8348
+Epoch 92/100
+115/115 [==============================] - 0s 975us/step - loss: 0.4478 - acc: 0.8348
+Epoch 93/100
+115/115 [==============================] - 0s 918us/step - loss: 0.4469 - acc: 0.8348
+Epoch 94/100
+115/115 [==============================] - 0s 927us/step - loss: 0.4460 - acc: 0.8348
+Epoch 95/100
+115/115 [==============================] - 0s 966us/step - loss: 0.4434 - acc: 0.8348
+Epoch 96/100
+115/115 [==============================] - 0s 966us/step - loss: 0.4455 - acc: 0.8348
+Epoch 97/100
+115/115 [==============================] - 0s 931us/step - loss: 0.4474 - acc: 0.8348
+Epoch 98/100
+115/115 [==============================] - 0s 940us/step - loss: 0.4447 - acc: 0.8348
+Epoch 99/100
+115/115 [==============================] - 0s 971us/step - loss: 0.4502 - acc: 0.8348
+Epoch 100/100
+115/115 [==============================] - 0s 940us/step - loss: 0.4458 - acc: 0.8348
+Epoch 1/100
+115/115 [==============================] - 2s 21ms/step - loss: 0.6897 - acc: 0.5652
+Epoch 2/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.6557 - acc: 0.6000
+Epoch 3/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.6199 - acc: 0.6000
+Epoch 4/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5850 - acc: 0.6000
+Epoch 5/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5655 - acc: 0.6000
+Epoch 6/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5470 - acc: 0.7043
+Epoch 7/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5489 - acc: 0.8348
+Epoch 8/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5443 - acc: 0.8348
+Epoch 9/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5415 - acc: 0.8348
+Epoch 10/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5344 - acc: 0.8348
+Epoch 11/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5066 - acc: 0.8348
+Epoch 12/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4832 - acc: 0.8348
+Epoch 13/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4577 - acc: 0.8348
+Epoch 14/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4475 - acc: 0.8348
+Epoch 15/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4478 - acc: 0.8348
+Epoch 16/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4509 - acc: 0.8348
+Epoch 17/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4456 - acc: 0.8348
+Epoch 18/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4468 - acc: 0.8348
+Epoch 19/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4458 - acc: 0.8348
+Epoch 20/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4477 - acc: 0.8348
+Epoch 21/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4467 - acc: 0.8348
+Epoch 22/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4462 - acc: 0.8348
+Epoch 23/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4457 - acc: 0.8348
+Epoch 24/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4489 - acc: 0.8348
+Epoch 25/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4460 - acc: 0.8348
+Epoch 26/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4448 - acc: 0.8348
+Epoch 27/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4452 - acc: 0.8348
+Epoch 28/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4469 - acc: 0.8348
+Epoch 29/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4449 - acc: 0.8348
+Epoch 30/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4483 - acc: 0.8348
+Epoch 31/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4458 - acc: 0.8348
+Epoch 32/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4450 - acc: 0.8348
+Epoch 33/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4470 - acc: 0.8348
+Epoch 34/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4490 - acc: 0.8348
+Epoch 35/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4534 - acc: 0.8348
+Epoch 36/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4470 - acc: 0.8348
+Epoch 37/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4577 - acc: 0.8348
+Epoch 38/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4483 - acc: 0.8348
+Epoch 39/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4486 - acc: 0.8348
+Epoch 40/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4511 - acc: 0.8348
+Epoch 41/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4458 - acc: 0.8348
+Epoch 42/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4499 - acc: 0.8348
+Epoch 43/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4465 - acc: 0.8348
+Epoch 44/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4440 - acc: 0.8348
+Epoch 45/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4475 - acc: 0.8348
+Epoch 46/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4485 - acc: 0.8348
+Epoch 47/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4487 - acc: 0.8348
+Epoch 48/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4589 - acc: 0.8348
+Epoch 49/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4533 - acc: 0.8348
+Epoch 50/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4472 - acc: 0.8348
+Epoch 51/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4458 - acc: 0.8348
+Epoch 52/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4472 - acc: 0.8348
+Epoch 53/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4483 - acc: 0.8348
+Epoch 54/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4476 - acc: 0.8348
+Epoch 55/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4455 - acc: 0.8348
+Epoch 56/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4571 - acc: 0.8348
+Epoch 57/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4400 - acc: 0.8348
+Epoch 58/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4483 - acc: 0.8348
+Epoch 59/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4506 - acc: 0.8348
+Epoch 60/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4454 - acc: 0.8348
+Epoch 61/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4507 - acc: 0.8348
+Epoch 62/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4486 - acc: 0.8348
+Epoch 63/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4495 - acc: 0.8348
+Epoch 64/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4472 - acc: 0.8348
+Epoch 65/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4467 - acc: 0.8348
+Epoch 66/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4488 - acc: 0.8348
+Epoch 67/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4459 - acc: 0.8348
+Epoch 68/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4457 - acc: 0.8348
+Epoch 69/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4469 - acc: 0.8348
+Epoch 70/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4459 - acc: 0.8348
+Epoch 71/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4459 - acc: 0.8348
+Epoch 72/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4459 - acc: 0.8348
+Epoch 73/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4558 - acc: 0.8348
+Epoch 74/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4476 - acc: 0.8348
+Epoch 75/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4508 - acc: 0.8348
+Epoch 76/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4464 - acc: 0.8348
+Epoch 77/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4565 - acc: 0.8348
+Epoch 78/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4476 - acc: 0.8348
+Epoch 79/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4469 - acc: 0.8348
+Epoch 80/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4465 - acc: 0.8348
+Epoch 81/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4473 - acc: 0.8348
+Epoch 82/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4488 - acc: 0.8348
+Epoch 83/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4484 - acc: 0.8348
+Epoch 84/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4475 - acc: 0.8348
+Epoch 85/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4465 - acc: 0.8348
+Epoch 86/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4460 - acc: 0.8348
+Epoch 87/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4455 - acc: 0.8348
+Epoch 88/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4504 - acc: 0.8348
+Epoch 89/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4446 - acc: 0.8348
+Epoch 90/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4488 - acc: 0.8348
+Epoch 91/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4439 - acc: 0.8348
+Epoch 92/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4461 - acc: 0.8348
+Epoch 93/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4523 - acc: 0.8348
+Epoch 94/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4492 - acc: 0.8348
+Epoch 95/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4439 - acc: 0.8348
+Epoch 96/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4454 - acc: 0.8348
+Epoch 97/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4458 - acc: 0.8348
+Epoch 98/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4483 - acc: 0.8348
+Epoch 99/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4462 - acc: 0.8348
+Epoch 100/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4507 - acc: 0.8348
+Epoch 1/100
+115/115 [==============================] - 3s 27ms/step - loss: 0.6917 - acc: 0.6000
+Epoch 2/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.6720 - acc: 0.6000
+Epoch 3/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.6132 - acc: 0.6000
+Epoch 4/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5916 - acc: 0.6000
+Epoch 5/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5559 - acc: 0.6000
+Epoch 6/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5614 - acc: 0.8087
+Epoch 7/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5530 - acc: 0.8348
+Epoch 8/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5583 - acc: 0.8348
+Epoch 9/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5405 - acc: 0.8348
+Epoch 10/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5291 - acc: 0.8348
+Epoch 11/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5166 - acc: 0.8348
+Epoch 12/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4872 - acc: 0.8348
+Epoch 13/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4548 - acc: 0.8348
+Epoch 14/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4427 - acc: 0.8348
+Epoch 15/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4468 - acc: 0.8348
+Epoch 16/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4492 - acc: 0.8348
+Epoch 17/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4518 - acc: 0.8348
+Epoch 18/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4468 - acc: 0.8348
+Epoch 19/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4487 - acc: 0.8348
+Epoch 20/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4459 - acc: 0.8348
+Epoch 21/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4465 - acc: 0.8348
+Epoch 22/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4450 - acc: 0.8348
+Epoch 23/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4457 - acc: 0.8348
+Epoch 24/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4449 - acc: 0.8348
+Epoch 25/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4457 - acc: 0.8348
+Epoch 26/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4482 - acc: 0.8348
+Epoch 27/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4474 - acc: 0.8348
+Epoch 28/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4457 - acc: 0.8348
+Epoch 29/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4450 - acc: 0.8348
+Epoch 30/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4472 - acc: 0.8348
+Epoch 31/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4454 - acc: 0.8348
+Epoch 32/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4456 - acc: 0.8348
+Epoch 33/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4487 - acc: 0.8348
+Epoch 34/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4442 - acc: 0.8348
+Epoch 35/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4501 - acc: 0.8348
+Epoch 36/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4481 - acc: 0.8348
+Epoch 37/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4458 - acc: 0.8348
+Epoch 38/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4493 - acc: 0.8348
+Epoch 39/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4447 - acc: 0.8348
+Epoch 40/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4465 - acc: 0.8348
+Epoch 41/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4476 - acc: 0.8348
+Epoch 42/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4464 - acc: 0.8348
+Epoch 43/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4466 - acc: 0.8348
+Epoch 44/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4465 - acc: 0.8348
+Epoch 45/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4510 - acc: 0.8348
+Epoch 46/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4452 - acc: 0.8348
+Epoch 47/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4514 - acc: 0.8348
+Epoch 48/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4460 - acc: 0.8348
+Epoch 49/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4457 - acc: 0.8348
+Epoch 50/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4483 - acc: 0.8348
+Epoch 51/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4452 - acc: 0.8348
+Epoch 52/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4471 - acc: 0.8348
+Epoch 53/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4478 - acc: 0.8348
+Epoch 54/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4491 - acc: 0.8348
+Epoch 55/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4498 - acc: 0.8348
+Epoch 56/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4478 - acc: 0.8348
+Epoch 57/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4456 - acc: 0.8348
+Epoch 58/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4471 - acc: 0.8348
+Epoch 59/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4528 - acc: 0.8348
+Epoch 60/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4525 - acc: 0.8348
+Epoch 61/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4439 - acc: 0.8348
+Epoch 62/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4511 - acc: 0.8348
+Epoch 63/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4464 - acc: 0.8348
+Epoch 64/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4493 - acc: 0.8348
+Epoch 65/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4467 - acc: 0.8348
+Epoch 66/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4454 - acc: 0.8348
+Epoch 67/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4461 - acc: 0.8348
+Epoch 68/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4486 - acc: 0.8348
+Epoch 69/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4566 - acc: 0.8348
+Epoch 70/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4493 - acc: 0.8348
+Epoch 71/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4475 - acc: 0.8348
+Epoch 72/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4461 - acc: 0.8348
+Epoch 73/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4449 - acc: 0.8348
+Epoch 74/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4469 - acc: 0.8348
+Epoch 75/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4453 - acc: 0.8348
+Epoch 76/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4458 - acc: 0.8348
+Epoch 77/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4465 - acc: 0.8348
+Epoch 78/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4467 - acc: 0.8348
+Epoch 79/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4505 - acc: 0.8348
+Epoch 80/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4509 - acc: 0.8348
+Epoch 81/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4458 - acc: 0.8348
+Epoch 82/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4515 - acc: 0.8348
+Epoch 83/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4456 - acc: 0.8348
+Epoch 84/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4482 - acc: 0.8348
+Epoch 85/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4451 - acc: 0.8348
+Epoch 86/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4496 - acc: 0.8348
+Epoch 87/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4508 - acc: 0.8348
+Epoch 88/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4503 - acc: 0.8348
+Epoch 89/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4474 - acc: 0.8348
+Epoch 90/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4461 - acc: 0.8348
+Epoch 91/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4471 - acc: 0.8348
+Epoch 92/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4468 - acc: 0.8348
+Epoch 93/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4509 - acc: 0.8348
+Epoch 94/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4493 - acc: 0.8348
+Epoch 95/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4460 - acc: 0.8348
+Epoch 96/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4542 - acc: 0.8348
+Epoch 97/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4457 - acc: 0.8348
+Epoch 98/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4620 - acc: 0.8348
+Epoch 99/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4560 - acc: 0.8348
+Epoch 100/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4536 - acc: 0.8348
+Epoch 1/100
+115/115 [==============================] - 3s 29ms/step - loss: 0.6904 - acc: 0.6000
+Epoch 2/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.6567 - acc: 0.6000
+Epoch 3/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5919 - acc: 0.6000
+Epoch 4/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5605 - acc: 0.6000
+Epoch 5/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5526 - acc: 0.7739
+Epoch 6/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5501 - acc: 0.8348
+Epoch 7/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5436 - acc: 0.8348
+Epoch 8/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5374 - acc: 0.8348
+Epoch 9/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5248 - acc: 0.8348
+Epoch 10/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.5037 - acc: 0.8348
+Epoch 11/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4766 - acc: 0.8348
+Epoch 12/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4515 - acc: 0.8348
+Epoch 13/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4598 - acc: 0.8348
+Epoch 14/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4524 - acc: 0.8348
+Epoch 15/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4556 - acc: 0.8348
+Epoch 16/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4426 - acc: 0.8348
+Epoch 17/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4480 - acc: 0.8348
+Epoch 18/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4473 - acc: 0.8348
+Epoch 19/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4474 - acc: 0.8348
+Epoch 20/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4478 - acc: 0.8348
+Epoch 21/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4478 - acc: 0.8348
+Epoch 22/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4487 - acc: 0.8348
+Epoch 23/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4462 - acc: 0.8348
+Epoch 24/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4444 - acc: 0.8348
+Epoch 25/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4451 - acc: 0.8348
+Epoch 26/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4468 - acc: 0.8348
+Epoch 27/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4473 - acc: 0.8348
+Epoch 28/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4483 - acc: 0.8348
+Epoch 29/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4499 - acc: 0.8348
+Epoch 30/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4475 - acc: 0.8348
+Epoch 31/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4643 - acc: 0.8348
+Epoch 32/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4442 - acc: 0.8348
+Epoch 33/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4587 - acc: 0.8348
+Epoch 34/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4462 - acc: 0.8348
+Epoch 35/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4482 - acc: 0.8348
+Epoch 36/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4480 - acc: 0.8348
+Epoch 37/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4493 - acc: 0.8348
+Epoch 38/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4453 - acc: 0.8348
+Epoch 39/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4499 - acc: 0.8348
+Epoch 40/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4434 - acc: 0.8348
+Epoch 41/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4561 - acc: 0.8348
+Epoch 42/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4508 - acc: 0.8348
+Epoch 43/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4452 - acc: 0.8348
+Epoch 44/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4495 - acc: 0.8348
+Epoch 45/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4457 - acc: 0.8348
+Epoch 46/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4476 - acc: 0.8348
+Epoch 47/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4468 - acc: 0.8348
+Epoch 48/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4447 - acc: 0.8348
+Epoch 49/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4497 - acc: 0.8348
+Epoch 50/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4454 - acc: 0.8348
+Epoch 51/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4484 - acc: 0.8348
+Epoch 52/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4501 - acc: 0.8348
+Epoch 53/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4457 - acc: 0.8348
+Epoch 54/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4472 - acc: 0.8348
+Epoch 55/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4455 - acc: 0.8348
+Epoch 56/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4498 - acc: 0.8348
+Epoch 57/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4478 - acc: 0.8348
+Epoch 58/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4442 - acc: 0.8348
+Epoch 59/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4512 - acc: 0.8348
+Epoch 60/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4463 - acc: 0.8348
+Epoch 61/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4478 - acc: 0.8348
+Epoch 62/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4448 - acc: 0.8348
+Epoch 63/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4458 - acc: 0.8348
+Epoch 64/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4455 - acc: 0.8348
+Epoch 65/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4462 - acc: 0.8348
+Epoch 66/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4461 - acc: 0.8348
+Epoch 67/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4451 - acc: 0.8348
+Epoch 68/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4455 - acc: 0.8348
+Epoch 69/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4458 - acc: 0.8348
+Epoch 70/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4443 - acc: 0.8348
+Epoch 71/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4496 - acc: 0.8348
+Epoch 72/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4439 - acc: 0.8348
+Epoch 73/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4496 - acc: 0.8348
+Epoch 74/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4471 - acc: 0.8348
+Epoch 75/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4498 - acc: 0.8348
+Epoch 76/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4575 - acc: 0.8348
+Epoch 77/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4441 - acc: 0.8348
+Epoch 78/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4525 - acc: 0.8348
+Epoch 79/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4512 - acc: 0.8348
+Epoch 80/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4459 - acc: 0.8348
+Epoch 81/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4487 - acc: 0.8348
+Epoch 82/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4480 - acc: 0.8348
+Epoch 83/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4494 - acc: 0.8348
+Epoch 84/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4473 - acc: 0.8348
+Epoch 85/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4467 - acc: 0.8348
+Epoch 86/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4452 - acc: 0.8348
+Epoch 87/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4454 - acc: 0.8348
+Epoch 88/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4448 - acc: 0.8348
+Epoch 89/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4494 - acc: 0.8348
+Epoch 90/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4444 - acc: 0.8348
+Epoch 91/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4456 - acc: 0.8348
+Epoch 92/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4491 - acc: 0.8348
+Epoch 93/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4445 - acc: 0.8348
+Epoch 94/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4468 - acc: 0.8348
+Epoch 95/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4460 - acc: 0.8348
+Epoch 96/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4450 - acc: 0.8348
+Epoch 97/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4457 - acc: 0.8348
+Epoch 98/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4463 - acc: 0.8348
+Epoch 99/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4464 - acc: 0.8348
+Epoch 100/100
+115/115 [==============================] - 0s 1ms/step - loss: 0.4537 - acc: 0.8348
+Epoch 1/100
+115/115 [==============================] - 4s 34ms/step - loss: 0.6902 - acc: 0.6000
+Epoch 2/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.6607 - acc: 0.6000
+Epoch 3/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.5837 - acc: 0.6000
+Epoch 4/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.5648 - acc: 0.6000
+Epoch 5/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.5486 - acc: 0.7043
+Epoch 6/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.5511 - acc: 0.8348
+Epoch 7/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.5435 - acc: 0.8348
+Epoch 8/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.5456 - acc: 0.8348
+Epoch 9/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.5353 - acc: 0.8348
+Epoch 10/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.5224 - acc: 0.8348
+Epoch 11/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.5013 - acc: 0.8348
+Epoch 12/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4707 - acc: 0.8348
+Epoch 13/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4554 - acc: 0.8348
+Epoch 14/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4510 - acc: 0.8348
+Epoch 15/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4467 - acc: 0.8348
+Epoch 16/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4528 - acc: 0.8348
+Epoch 17/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4453 - acc: 0.8348
+Epoch 18/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4448 - acc: 0.8348
+Epoch 19/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4511 - acc: 0.8348
+Epoch 20/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4453 - acc: 0.8348
+Epoch 21/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4485 - acc: 0.8348
+Epoch 22/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4470 - acc: 0.8348
+Epoch 23/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4516 - acc: 0.8348
+Epoch 24/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4562 - acc: 0.8348
+Epoch 25/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4462 - acc: 0.8348
+Epoch 26/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4464 - acc: 0.8348
+Epoch 27/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4463 - acc: 0.8348
+Epoch 28/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4475 - acc: 0.8348
+Epoch 29/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4455 - acc: 0.8348
+Epoch 30/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4466 - acc: 0.8348
+Epoch 31/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4452 - acc: 0.8348
+Epoch 32/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4469 - acc: 0.8348
+Epoch 33/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4505 - acc: 0.8348
+Epoch 34/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4446 - acc: 0.8348
+Epoch 35/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4487 - acc: 0.8348
+Epoch 36/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4452 - acc: 0.8348
+Epoch 37/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4469 - acc: 0.8348
+Epoch 38/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4486 - acc: 0.8348
+Epoch 39/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4454 - acc: 0.8348
+Epoch 40/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4495 - acc: 0.8348
+Epoch 41/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4504 - acc: 0.8348
+Epoch 42/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4462 - acc: 0.8348
+Epoch 43/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4457 - acc: 0.8348
+Epoch 44/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4479 - acc: 0.8348
+Epoch 45/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4456 - acc: 0.8348
+Epoch 46/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4498 - acc: 0.8348
+Epoch 47/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4458 - acc: 0.8348
+Epoch 48/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4456 - acc: 0.8348
+Epoch 49/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4504 - acc: 0.8348
+Epoch 50/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4430 - acc: 0.8348
+Epoch 51/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4583 - acc: 0.8348
+Epoch 52/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4522 - acc: 0.8348
+Epoch 53/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4482 - acc: 0.8348
+Epoch 54/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4481 - acc: 0.8348
+Epoch 55/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4504 - acc: 0.8348
+Epoch 56/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4472 - acc: 0.8348
+Epoch 57/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4492 - acc: 0.8348
+Epoch 58/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4487 - acc: 0.8348
+Epoch 59/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4553 - acc: 0.8348
+Epoch 60/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4445 - acc: 0.8348
+Epoch 61/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4469 - acc: 0.8348
+Epoch 62/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4464 - acc: 0.8348
+Epoch 63/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4457 - acc: 0.8348
+Epoch 64/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4476 - acc: 0.8348
+Epoch 65/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4454 - acc: 0.8348
+Epoch 66/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4462 - acc: 0.8348
+Epoch 67/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4459 - acc: 0.8348
+Epoch 68/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4484 - acc: 0.8348
+Epoch 69/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4477 - acc: 0.8348
+Epoch 70/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4452 - acc: 0.8348
+Epoch 71/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4453 - acc: 0.8348
+Epoch 72/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4466 - acc: 0.8348
+Epoch 73/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4459 - acc: 0.8348
+Epoch 74/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4461 - acc: 0.8348
+Epoch 75/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4452 - acc: 0.8348
+Epoch 76/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4475 - acc: 0.8348
+Epoch 77/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4446 - acc: 0.8348
+Epoch 78/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4479 - acc: 0.8348
+Epoch 79/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4456 - acc: 0.8348
+Epoch 80/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4474 - acc: 0.8348
+Epoch 81/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4446 - acc: 0.8348
+Epoch 82/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4523 - acc: 0.8348
+Epoch 83/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4462 - acc: 0.8348
+Epoch 84/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4471 - acc: 0.8348
+Epoch 85/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4465 - acc: 0.8348
+Epoch 86/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4470 - acc: 0.8348
+Epoch 87/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4472 - acc: 0.8348
+Epoch 88/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4496 - acc: 0.8348
+Epoch 89/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4479 - acc: 0.8348
+Epoch 90/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4467 - acc: 0.8348
+Epoch 91/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4482 - acc: 0.8348
+Epoch 92/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4446 - acc: 0.8348
+Epoch 93/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4453 - acc: 0.8348
+Epoch 94/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4471 - acc: 0.8348
+Epoch 95/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4451 - acc: 0.8348
+Epoch 96/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4448 - acc: 0.8348
+Epoch 97/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4466 - acc: 0.8348
+Epoch 98/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4451 - acc: 0.8348
+Epoch 99/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4452 - acc: 0.8348
+Epoch 100/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4448 - acc: 0.8348
+Epoch 1/100
+115/115 [==============================] - 5s 39ms/step - loss: 0.6890 - acc: 0.6696
+Epoch 2/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.6538 - acc: 0.6000
+Epoch 3/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.5812 - acc: 0.6000
+Epoch 4/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.5640 - acc: 0.6174
+Epoch 5/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.5583 - acc: 0.8348
+Epoch 6/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.5493 - acc: 0.8348
+Epoch 7/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.5427 - acc: 0.8348
+Epoch 8/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.5231 - acc: 0.8348
+Epoch 9/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.5079 - acc: 0.8348
+Epoch 10/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4735 - acc: 0.8348
+Epoch 11/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4522 - acc: 0.8348
+Epoch 12/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4555 - acc: 0.8348
+Epoch 13/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4478 - acc: 0.8348
+Epoch 14/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4489 - acc: 0.8348
+Epoch 15/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4495 - acc: 0.8348
+Epoch 16/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4457 - acc: 0.8348
+Epoch 17/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4479 - acc: 0.8348
+Epoch 18/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4459 - acc: 0.8348
+Epoch 19/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4471 - acc: 0.8348
+Epoch 20/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4529 - acc: 0.8348
+Epoch 21/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4576 - acc: 0.8348
+Epoch 22/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4460 - acc: 0.8348
+Epoch 23/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4458 - acc: 0.8348
+Epoch 24/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4468 - acc: 0.8348
+Epoch 25/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4445 - acc: 0.8348
+Epoch 26/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4452 - acc: 0.8348
+Epoch 27/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4491 - acc: 0.8348
+Epoch 28/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4462 - acc: 0.8348
+Epoch 29/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4463 - acc: 0.8348
+Epoch 30/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4464 - acc: 0.8348
+Epoch 31/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4447 - acc: 0.8348
+Epoch 32/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4477 - acc: 0.8348
+Epoch 33/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4450 - acc: 0.8348
+Epoch 34/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4453 - acc: 0.8348
+Epoch 35/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4446 - acc: 0.8348
+Epoch 36/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4503 - acc: 0.8348
+Epoch 37/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4474 - acc: 0.8348
+Epoch 38/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4449 - acc: 0.8348
+Epoch 39/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4450 - acc: 0.8348
+Epoch 40/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4490 - acc: 0.8348
+Epoch 41/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4449 - acc: 0.8348
+Epoch 42/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4474 - acc: 0.8348
+Epoch 43/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4506 - acc: 0.8348
+Epoch 44/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4463 - acc: 0.8348
+Epoch 45/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4467 - acc: 0.8348
+Epoch 46/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4461 - acc: 0.8348
+Epoch 47/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4473 - acc: 0.8348
+Epoch 48/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4448 - acc: 0.8348
+Epoch 49/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4471 - acc: 0.8348
+Epoch 50/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4481 - acc: 0.8348
+Epoch 51/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4466 - acc: 0.8348
+Epoch 52/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4474 - acc: 0.8348
+Epoch 53/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4466 - acc: 0.8348
+Epoch 54/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4486 - acc: 0.8348
+Epoch 55/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4448 - acc: 0.8348
+Epoch 56/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4469 - acc: 0.8348
+Epoch 57/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4502 - acc: 0.8348
+Epoch 58/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4455 - acc: 0.8348
+Epoch 59/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4463 - acc: 0.8348
+Epoch 60/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4521 - acc: 0.8348
+Epoch 61/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4543 - acc: 0.8348
+Epoch 62/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4449 - acc: 0.8348
+Epoch 63/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4444 - acc: 0.8348
+Epoch 64/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4469 - acc: 0.8348
+Epoch 65/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4488 - acc: 0.8348
+Epoch 66/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4473 - acc: 0.8348
+Epoch 67/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4490 - acc: 0.8348
+Epoch 68/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4434 - acc: 0.8348
+Epoch 69/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4485 - acc: 0.8348
+Epoch 70/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4512 - acc: 0.8348
+Epoch 71/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4492 - acc: 0.8348
+Epoch 72/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4451 - acc: 0.8348
+Epoch 73/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4487 - acc: 0.8348
+Epoch 74/100
+115/115 [==============================] - ETA: 0s - loss: 0.4887 - acc: 0.810 - 0s 2ms/step - loss: 0.4507 - acc: 0.8348
+Epoch 75/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4467 - acc: 0.8348
+Epoch 76/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4497 - acc: 0.8348
+Epoch 77/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4465 - acc: 0.8348
+Epoch 78/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4469 - acc: 0.8348
+Epoch 79/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4472 - acc: 0.8348
+Epoch 80/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4484 - acc: 0.8348
+Epoch 81/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4503 - acc: 0.8348
+Epoch 82/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4462 - acc: 0.8348
+Epoch 83/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4516 - acc: 0.8348
+Epoch 84/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4437 - acc: 0.8348
+Epoch 85/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4613 - acc: 0.8348
+Epoch 86/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4510 - acc: 0.8348
+Epoch 87/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4528 - acc: 0.8348
+Epoch 88/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4457 - acc: 0.8348
+Epoch 89/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4478 - acc: 0.8348
+Epoch 90/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4467 - acc: 0.8348
+Epoch 91/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4448 - acc: 0.8348
+Epoch 92/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4473 - acc: 0.8348
+Epoch 93/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4500 - acc: 0.8348
+Epoch 94/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4619 - acc: 0.8348
+Epoch 95/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4494 - acc: 0.8348
+Epoch 96/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4617 - acc: 0.8348
+Epoch 97/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4471 - acc: 0.8348
+Epoch 98/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4454 - acc: 0.8348
+Epoch 99/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4480 - acc: 0.8348
+Epoch 100/100
+115/115 [==============================] - 0s 2ms/step - loss: 0.4464 - acc: 0.8348
+
+    \end{Verbatim}
+
+    \section{Creating the confusion
+matrix}\label{creating-the-confusion-matrix}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}38}]:} \PY{c+c1}{\PYZsh{}accuracy/10}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} \PY{n}{y\PYZus{}pred} \PY{o}{=} \PY{n}{classifier}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+         \PY{n}{y\PYZus{}pred} \PY{o}{=} \PY{p}{(}\PY{n}{y\PYZus{}pred} \PY{o}{\PYZgt{}} \PY{l+m+mf}{0.5}\PY{p}{)}
+         \PY{n}{cm} \PY{o}{=} \PY{n}{confusion\PYZus{}matrix}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}
+         \PY{n}{accuracy} \PY{o}{=} \PY{p}{(}\PY{p}{(}\PY{n}{cm}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{+}\PY{n}{cm}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{cm}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{+}\PY{n}{cm}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{+}\PY{n}{cm}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{+}\PY{n}{cm}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}40}]:} \PY{n}{accuracy}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}40}]:} 88.0
+\end{Verbatim}
+            
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
